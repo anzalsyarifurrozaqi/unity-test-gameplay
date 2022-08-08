@@ -23,6 +23,8 @@ namespace Character.Function
             AddFunction(typeof(MoveForward));
             AddFunction(typeof(FaceToTarget));
             AddFunction(typeof(DashForward));
+
+            AddFunction(typeof(Reposition_Spheres_Front));
         }
 
         void AddFunction(System.Type type)

@@ -7,5 +7,6 @@ namespace Dataset
         public AbilityData ABILITY_DATA;
         public CameraSwitchData CAMERA_SWITCH_DATA;
         public TargetData TARGET_DATA;
+        public CollisionSpheresData COLLISION_SPHERES_DATA;
     }
 }

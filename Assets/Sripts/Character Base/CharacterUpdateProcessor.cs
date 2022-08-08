@@ -37,6 +37,7 @@ namespace Character.Update
         void SetDefaultUpdates()
         {
             AddUpdater(typeof(TargetDistance));
+            AddUpdater(typeof(CollisionSphere));
         }
 
         void AddUpdater(System.Type UpdaterType)
