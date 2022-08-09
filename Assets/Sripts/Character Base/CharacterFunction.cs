@@ -15,5 +15,9 @@ namespace Character.Function {
         public virtual void RunFunction(Vector2 vector2) {
             throw new System.NotImplementedException();
         }
+
+        public virtual void RunFunction(float value) {
+            throw new System.NotImplementedException();
+        }
     }
 }

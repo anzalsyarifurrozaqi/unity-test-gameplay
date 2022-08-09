@@ -8,6 +8,7 @@ namespace Ablilities {
         public override void OnEnter(CharacterState characterState, Animator animator, AnimatorStateInfo stateInfo)
         {
             Debug.Log("on idle");
+            characterState.control.DATASET.BLOCKING_DATA.FrontBlockingObjects.Clear();
         }
         
         public override void UpdateAbility(CharacterState characterState, Animator animator, AnimatorStateInfo stateInfo)

@@ -127,6 +127,10 @@ namespace Character
             characterFunctionProcessor.DicFunctions[FunctionType].RunFunction(characterControl);
         }
 
+        public void RunFunction(System.Type FunctionType, float value) {
+            characterFunctionProcessor.DicFunctions[FunctionType].RunFunction(value);
+        }
+
         public void RunFunction(System.Type FunctionType, Vector2 vector2) {
             characterFunctionProcessor.DicFunctions[FunctionType].RunFunction(vector2);
         }

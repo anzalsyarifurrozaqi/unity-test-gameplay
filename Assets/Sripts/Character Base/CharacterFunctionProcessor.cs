@@ -25,6 +25,15 @@ namespace Character.Function
             AddFunction(typeof(DashForward));
 
             AddFunction(typeof(Reposition_Spheres_Front));
+            AddFunction(typeof(Reposition_Spheres_Back));
+            AddFunction(typeof(Reposition_Spheres_Left));
+            AddFunction(typeof(Reposition_Spheres_Right));
+            AddFunction(typeof(Reposition_Spheres_Bottom));
+
+            AddFunction(typeof(CheckFrontBlocking));
+            AddFunction(typeof(CheckBackBlocking));
+            AddFunction(typeof(CheckRightBlocking));
+            AddFunction(typeof(CheckLeftBlocking));            
         }
 
         void AddFunction(System.Type type)

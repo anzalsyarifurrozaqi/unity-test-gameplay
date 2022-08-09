@@ -3,7 +3,6 @@ using Character.Function;
 
 public class Reposition_Spheres_Front : CharacterFunction {    
     public override void RunFunction() {
-
         CollisionSpheresData collisionSpheresData = CharacterControl.DATASET.COLLISION_SPHERES_DATA;
         BoxCollider boxCollider = CharacterControl.BOX_COLLIDER;
         Vector3 characterPosition = CharacterControl.transform.position;
@@ -19,8 +18,7 @@ public class Reposition_Spheres_Front : CharacterFunction {
 
         float interval = (right - left) / 2;
         
-        for (int i = 2; i < collisionSpheresData.FrontSpheres.Length; ++i) {
-            collisionSpheresData.FrontSpheres[i].transform.localPosition = new Vector3(left + (interval * (i - 1)), y, front) - characterPosition;
-        }
+        for (int i = 2; i < collisionSpheresData.FrontSpheres.Length; ++i)
+            collisionSpheresData.FrontSpheres[i].transform.localPosition = new Vector3(left + (interval * (i - 1)), y, front) - characterPosition;        
     }
 }

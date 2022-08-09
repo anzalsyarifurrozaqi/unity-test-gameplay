@@ -8,14 +8,10 @@ namespace Character.Update
     {
         public Dictionary<System.Type, CharacterUpdate> DicUpdaters = new Dictionary<System.Type, CharacterUpdate>();        
 
-        public CharacterControl control
-        {
-            get
-            {
+        public CharacterControl control {
+            get {
                 if (_characterControl == null)
-                {
                     _characterControl = GetComponentInParent<CharacterControl>();
-                }
 
                 return _characterControl;
             }
@@ -23,33 +19,27 @@ namespace Character.Update
 
         private CharacterControl _characterControl;
 
-        public void InitUpdaters()
-        {            
+        public void InitUpdaters() {            
             Debug.Log("Loading Default Character Updates : " + control.gameObject.name);
             SetDefaultUpdates();
 
             if (control.characterSetup.CharacterType == CharacterType.PLAYER)
-            {
-                AddUpdater(typeof(ManualInput));
-            }          
+                AddUpdater(typeof(ManualInput));            
         }
 
-        void SetDefaultUpdates()
-        {
+        void SetDefaultUpdates() {
             AddUpdater(typeof(TargetDistance));
             AddUpdater(typeof(CollisionSphere));
+            AddUpdater(typeof(BlockingObject));
         }
 
-        void AddUpdater(System.Type UpdaterType)
-        {
-            if (UpdaterType.IsSubclassOf(typeof(CharacterUpdate)))
-            {
+        void AddUpdater(System.Type UpdaterType) {
+            if (UpdaterType.IsSubclassOf(typeof(CharacterUpdate))) {
                 _AddUpdater(UpdaterType);
             }
         }
 
-        void _AddUpdater(System.Type UpdaterType)
-        {
+        void _AddUpdater(System.Type UpdaterType) {
             GameObject obj = new GameObject();
             obj.name = UpdaterType.ToString();
             obj.name = obj.name;
@@ -64,43 +54,31 @@ namespace Character.Update
             u.InitComponent();            
         }
 
-        public void RunCharacterFixedUpdate()
-        {
+        public void RunCharacterFixedUpdate() {
+            CharacterFixedUpdate(typeof(BlockingObject));
         }
 
-        public void RunCharacterUpdate()
-        {
+        public void RunCharacterUpdate() {
             CharacterUpdate(typeof(ManualInput));
         }
 
-        public void RunCharacterLateUpdate()
-        {
+        public void RunCharacterLateUpdate() {
             CharacterLateUpdate(typeof(TargetDistance));
         }
 
-        void CharacterUpdate(System.Type UpdaterType)
-        {
-            
+        void CharacterUpdate(System.Type UpdaterType) {            
             if (control.characterUpdateProcessor.DicUpdaters.ContainsKey(UpdaterType))
-            {
-                control.characterUpdateProcessor.DicUpdaters[UpdaterType].OnUpdate();
-            }
+                control.characterUpdateProcessor.DicUpdaters[UpdaterType].OnUpdate();            
         }
 
-        void CharacterFixedUpdate(System.Type UpdaterType)
-        {
-            if (control.characterUpdateProcessor.DicUpdaters.ContainsKey(UpdaterType))
-            {
-                control.characterUpdateProcessor.DicUpdaters[UpdaterType].OnFixedUpdate();
-            }
+        void CharacterFixedUpdate(System.Type UpdaterType) {
+            if (control.characterUpdateProcessor.DicUpdaters.ContainsKey(UpdaterType))            
+                control.characterUpdateProcessor.DicUpdaters[UpdaterType].OnFixedUpdate();            
         }
 
-        void CharacterLateUpdate(System.Type UpdaterType)
-        {
-            if (control.characterUpdateProcessor.DicUpdaters.ContainsKey(UpdaterType))
-            {
-                control.characterUpdateProcessor.DicUpdaters[UpdaterType].OnLateUpdate();
-            }
+        void CharacterLateUpdate(System.Type UpdaterType) {
+            if (control.characterUpdateProcessor.DicUpdaters.ContainsKey(UpdaterType))            
+                control.characterUpdateProcessor.DicUpdaters[UpdaterType].OnLateUpdate();        
         }
     }
 }

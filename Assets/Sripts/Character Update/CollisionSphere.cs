@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Character.Update;
 
@@ -18,15 +16,57 @@ public class CollisionSphere : CharacterUpdate {
     }
 
     private void SetCollisionSpheres() {
+        CollisionSpheresData collisionSpheresData = CharacterControl.DATASET.COLLISION_SPHERES_DATA;
+
         // Front
         for (int i = 0; i < 3; ++i) {
             GameObject collisionSphere = LoadCollisionSphresObject();
 
-            CharacterControl.DATASET.COLLISION_SPHERES_DATA.FrontSpheres[i] = collisionSphere;
+            collisionSpheresData.FrontSpheres[i] = collisionSphere;
             collisionSphere.transform.parent = Front.transform;
         }
 
         CharacterControl.RunFunction(typeof(Reposition_Spheres_Front));
+
+        // Back
+        for (int i = 0; i < 3; ++i) {
+            GameObject collisionSphere = LoadCollisionSphresObject();
+
+            collisionSpheresData.BackSpheres[i] = collisionSphere;
+            collisionSphere.transform.parent = Back.transform;            
+        }
+
+        CharacterControl.RunFunction(typeof(Reposition_Spheres_Back));
+
+        // Left
+        for (int i = 0; i < 3; ++i) {
+            GameObject collisionSphere = LoadCollisionSphresObject();
+
+            collisionSpheresData.LeftSpheres[i] = collisionSphere;
+            collisionSphere.transform.parent = Left.transform;
+        }
+
+        CharacterControl.RunFunction(typeof(Reposition_Spheres_Left));
+
+        // Right
+        for (int i = 0; i < 3; ++i) {
+            GameObject collisionSphere = LoadCollisionSphresObject();
+
+            collisionSpheresData.RightSpheres[i] = collisionSphere;
+            collisionSphere.transform.parent = Right.transform;            
+        }
+
+        CharacterControl.RunFunction(typeof(Reposition_Spheres_Right));
+
+        // Bottom
+        for (int i = 0; i < 3; ++i) {
+            GameObject collisionSphere = LoadCollisionSphresObject();
+
+            collisionSpheresData.BottomSpheres[i] = collisionSphere;
+            collisionSphere.transform.parent = Bottom.transform;            
+        }
+
+        CharacterControl.RunFunction(typeof(Reposition_Spheres_Bottom));
     }
 
     private void SetParent() {
