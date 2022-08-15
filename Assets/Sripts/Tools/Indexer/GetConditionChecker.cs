@@ -21,6 +21,7 @@ public class GetConditionChecker : MonoBehaviour {
         _Add(TransitionConditionType.ATTACKING, typeof(CheckCondition_Attacking));
         _Add(TransitionConditionType.FACING_TO_TARGET, typeof(CheckCondition_FacingToTarget));
         _Add(TransitionConditionType.DASH, typeof(CheckCondition_Dash));
+        _Add(TransitionConditionType.TURN, typeof(CheckCondition_BackTurn));
     }
 
     static void _Add(TransitionConditionType transitionConditionType, System.Type checkConditionType) {

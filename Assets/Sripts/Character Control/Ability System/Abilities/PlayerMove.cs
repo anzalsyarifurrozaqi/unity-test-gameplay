@@ -18,7 +18,7 @@ namespace Ablilities {
             if (control.Move == Vector2.zero) return;
 
             control.RunFunction(typeof(CalculateDirection), control.Move);
-            control.RunFunction(typeof(MoveForward));
+            // control.RunFunction(typeof(MoveForward));
         }        
 
         public override void OnExit(CharacterState characterState, Animator animator, AnimatorStateInfo stateInfo)
