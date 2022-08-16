@@ -89,6 +89,15 @@ namespace Manager
                 ArrCharacters[i].CharacterLateUpdate();
             }
         }
+
+        private void OnAnimatorMove() {
+            InitCharacterArray();
+
+            for (int i = 0; i < ArrCharacters.Length; i++) {
+                // ArrCharacters[i].CharacterIbAnimatorMove();
+            }
+        }
+
         #endregion
 
         #region UTIL METHOD

@@ -10,7 +10,9 @@ namespace Character.Function
         {
             characterControl.characterSetup = characterControl.GetComponentInChildren<CharacterSetup>();
             characterControl.characterUpdateProcessor = characterControl.GetComponentInChildren<CharacterUpdateProcessor>();
-            characterControl.characterQueryProcessor = characterControl.GetComponentInChildren<CharacterQueryProcessor>();           
+            characterControl.characterQueryProcessor = characterControl.GetComponentInChildren<CharacterQueryProcessor>();   
+
+            characterControl.ANIMATOR.applyRootMotion = true;        
 
             RegisterCharacter(characterControl);
             InitCharacterStates(characterControl);

@@ -6,8 +6,11 @@ using Character.Update;
 
 namespace Character
 {
-    public class CharacterControl : MonoBehaviour
-    {
+    public class CharacterControl : MonoBehaviour {
+
+        void OnAnimationMove() {
+            Debug.Log("test");
+        }
         [Header("Debug Object")]
         public GameObject target;
 
@@ -137,6 +140,6 @@ namespace Character
         #endregion
 
         #region Queries
-        #endregion
+        #endregion        
     }
 }
