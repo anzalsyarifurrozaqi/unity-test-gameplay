@@ -33,7 +33,9 @@ namespace Character.Function
             AddFunction(typeof(CheckFrontBlocking));
             AddFunction(typeof(CheckBackBlocking));
             AddFunction(typeof(CheckRightBlocking));
-            AddFunction(typeof(CheckLeftBlocking));            
+            AddFunction(typeof(CheckLeftBlocking));
+
+            AddFunction(typeof(SetTransform));
         }
 
         void AddFunction(System.Type type)

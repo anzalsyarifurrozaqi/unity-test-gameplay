@@ -19,5 +19,9 @@ namespace Character.Function {
         public virtual void RunFunction(float value) {
             throw new System.NotImplementedException();
         }
+
+        public virtual void RunFunction(Vector3 value, Quaternion value2) {
+            throw new System.NotImplementedException();
+        }
     }
 }

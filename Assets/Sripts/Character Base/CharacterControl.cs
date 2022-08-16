@@ -137,6 +137,10 @@ namespace Character
         public void RunFunction(System.Type FunctionType, Vector2 vector2) {
             characterFunctionProcessor.DicFunctions[FunctionType].RunFunction(vector2);
         }
+
+        public void RunFunction(System.Type FunctionType, Vector3 value, Quaternion value2) {
+            characterFunctionProcessor.DicFunctions[FunctionType].RunFunction(value, value2);
+        }
         #endregion
 
         #region Queries
