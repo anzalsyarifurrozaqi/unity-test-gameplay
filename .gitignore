@@ -1,0 +1,11 @@
+#Directories
+.vscode/
+Library/
+Logs/
+Temp/
+UserSettings/
+obj/
+
+#Files
+Assembly-Csharp.csproj
+unity-test-gameplay.sln
