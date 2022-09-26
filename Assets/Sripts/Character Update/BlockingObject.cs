@@ -9,10 +9,10 @@ public class BlockingObject : CharacterUpdate {
         CharacterControl.RunFunction(typeof(CheckRightBlocking), 0.25f);
 
         // debug
-        if (CharacterControl.DATASET.BLOCKING_DATA.FrontBlockingObjects != null) {
-            foreach (KeyValuePair<GameObject, List<GameObject>> dicFrontBlockingObject in CharacterControl.DATASET.BLOCKING_DATA.FrontBlockingObjects) {
-                Debug.Log(dicFrontBlockingObject.Value.Count);
-            }
-        }
+        // if (CharacterControl.DATASET.BLOCKING_DATA.FrontBlockingObjects != null) {
+        //     foreach (KeyValuePair<GameObject, List<GameObject>> dicFrontBlockingObject in CharacterControl.DATASET.BLOCKING_DATA.FrontBlockingObjects) {
+        //         Debug.Log(dicFrontBlockingObject.Value.Count);
+        //     }
+        // }
     }
 }
