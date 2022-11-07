@@ -8,4 +8,5 @@ obj/
 
 #Files
 Assembly-Csharp.csproj
+Assembly-Csharp-Editor.csproj
 unity-test-gameplay.sln

@@ -2,7 +2,7 @@
     "name": "InputSystem",
     "maps": [
         {
-            "name": "Character",
+            "name": "Player",
             "id": "d4d6054b-b444-4bf1-890f-f464278a4367",
             "actions": [
                 {
@@ -15,22 +15,13 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "ATTACK",
-                    "type": "PassThrough",
-                    "id": "34e98cd6-000f-4560-bfe1-2249034cabd2",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "Hold",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "DASH",
-                    "type": "Button",
-                    "id": "d9861601-1619-4f0f-859b-5db3137df434",
-                    "expectedControlType": "Button",
+                    "name": "LOOK",
+                    "type": "Value",
+                    "id": "1736aedb-812d-411d-a866-a39019ab6d5f",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -102,23 +93,12 @@
                 },
                 {
                     "name": "",
-                    "id": "c36d567d-c898-4eea-92b3-ae2d3f786e8c",
-                    "path": "<Mouse>/leftButton",
+                    "id": "dabb996e-5b95-4371-9753-4f764c04d299",
+                    "path": "<Mouse>/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard & Mouse",
-                    "action": "ATTACK",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "cf9152e5-e711-46ab-ac66-4ca37c61628d",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard & Mouse",
-                    "action": "DASH",
+                    "action": "LOOK",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

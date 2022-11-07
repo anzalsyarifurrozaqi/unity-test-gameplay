@@ -16,8 +16,7 @@ namespace Character
 
         [Header("Input")]
         public Vector2 Move;
-        public bool Attack;
-        public bool Dash;
+        public Vector2 Look;
 
         [Header("SubComponens")]
         public CharacterSetup characterSetup;

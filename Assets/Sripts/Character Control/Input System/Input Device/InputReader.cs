@@ -1,37 +1,52 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Input.Device {
     public class InputReader : MonoBehaviour {
 
-        private InputSystem _inputSystem;
-        private void OnEnable() {
+        [SerializeField] private InputSystem _inputSystem;
+        [SerializeField] private bool _inputSystemInitialized = false;
+        public Vector2 Move;
+        public Vector2 Look;
+
+        void OnDisable()
+        {
+            _resetInputSystem();
+        }
+        void Awake()
+        {
+            _inputSystem = new InputSystem();            
+        }
+
+        void Update()
+        {
+            if (!_inputSystemInitialized)
+                _initInputSystem();
+
+        }
+
+        private void _initInputSystem()
+        {
             _inputSystem.Enable();
+            _inputSystem.Player.MOVE.performed += _onMove;
+            _inputSystem.Player.LOOK.performed += _onLook;
         }
 
-        private void OnDisable() {
+        private void _resetInputSystem()
+        {
             _inputSystem.Disable();
-        }
-        private void Awake() {
-            _inputSystem = new InputSystem();
-        }       
-
-
-        public Vector2 ReadMove() {
-            Vector2 moveValue = _inputSystem.Character.MOVE.ReadValue<Vector2>();
-
-            if (moveValue.magnitude > 0f) {
-                return moveValue;
-            }
-
-            return Vector2.zero;
+            _inputSystem.Player.MOVE.performed -= _onMove;
+            _inputSystem.Player.LOOK.performed -= _onLook;
         }
 
-        public bool ReadAttack() {
-            return _inputSystem.Character.ATTACK.inProgress;
+        private void _onMove(InputAction.CallbackContext context)
+        {
+            Move = context.ReadValue<Vector2>();
         }
 
-        public bool ReadDash() {
-            return _inputSystem.Character.DASH.triggered;
+        private void _onLook(InputAction.CallbackContext context)
+        {
+            Look = context.ReadValue<Vector2>();
         }
     }
 }

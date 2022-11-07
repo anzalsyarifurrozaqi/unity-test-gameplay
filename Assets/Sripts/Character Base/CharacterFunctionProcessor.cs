@@ -36,6 +36,8 @@ namespace Character.Function
             AddFunction(typeof(CheckLeftBlocking));
 
             AddFunction(typeof(SetTransform));
+
+            AddFunction(typeof(Look));
         }
 
         void AddFunction(System.Type type)

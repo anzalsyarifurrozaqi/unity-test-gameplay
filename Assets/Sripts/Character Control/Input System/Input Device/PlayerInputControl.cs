@@ -14,9 +14,8 @@ namespace Input.Device {
         }
 
         private void Update() {
-            InputManager.Instance.Move = _inputReader.ReadMove();            
-            InputManager.Instance.Attack = _inputReader.ReadAttack();
-            InputManager.Instance.Dash = _inputReader.ReadDash();
+            InputManager.Instance.Move = _inputReader.Move;
+            InputManager.Instance.Look = _inputReader.Look;
         }
     }
 }
