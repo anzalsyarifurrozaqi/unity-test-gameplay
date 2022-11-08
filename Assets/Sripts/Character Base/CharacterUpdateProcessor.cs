@@ -56,6 +56,7 @@ namespace Character.Update
 
         public void RunCharacterFixedUpdate() {
             CharacterFixedUpdate(typeof(BlockingObject));
+            CharacterFixedUpdate(typeof(ManualInput));
         }
 
         public void RunCharacterUpdate() {

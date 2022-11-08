@@ -5,6 +5,7 @@ Logs/
 Temp/
 UserSettings/
 obj/
+Assets/StarterAssets/
 
 #Files
 Assembly-Csharp.csproj
