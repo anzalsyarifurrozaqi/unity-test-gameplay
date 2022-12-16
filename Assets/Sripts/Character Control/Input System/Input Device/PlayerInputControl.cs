@@ -16,6 +16,7 @@ namespace Input.Device {
         private void Update() {
             InputManager.Instance.Move = _inputReader.Move;
             InputManager.Instance.Look = _inputReader.Look;
+            InputManager.Instance.IsShoot = _inputReader.IsShoot;
         }
     }
 }

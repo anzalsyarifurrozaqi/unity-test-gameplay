@@ -12,6 +12,7 @@ namespace Character.Update {
         bool cursorTriggered = false;
         static float timeSpeed = 10.0f;
         Quaternion targetRotation = Quaternion.identity;
+        float timeValue = 0f;
         public override void InitComponent()
         {
             cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -28,6 +29,8 @@ namespace Character.Update {
 
             CharacterControl.Move = InputManager.Instance.Move;
             CharacterControl.Look = InputManager.Instance.Look;
+            CharacterControl.IsShoot = InputManager.Instance.IsShoot;
+                    
             CharacterControl.ANIMATOR.SetFloat(HashManager.Instance.ArrMainParams[(int)MainParameterType.Horizontal], 0);
             CharacterControl.ANIMATOR.SetFloat(HashManager.Instance.ArrMainParams[(int)MainParameterType.Vertical], 0);
             analogTriggered = false;
@@ -42,16 +45,16 @@ namespace Character.Update {
                 analogTriggered = true;                
             }
 
-            if (lookMagnitude != 0)
+            currentCursorPosition = CharacterControl.Look;
+            Ray ray = Camera.main.ScreenPointToRay(InputManager.Instance.Look);
+            if (plane.Raycast(ray, out distance))
             {
-                // cursor direction
-                currentCursorPosition = CharacterControl.Look;
-                Ray ray = Camera.main.ScreenPointToRay(InputManager.Instance.Look);
-                if (plane.Raycast(ray, out distance))
-                {
-                    cube.transform.position = ray.GetPoint(distance);
-                    cursorTriggered = true;
-                }                
+                cube.transform.position = ray.GetPoint(distance);
+                cursorTriggered = true;
+            }
+
+            if (!CharacterControl.IsShoot) {
+                return;
             }
 
             if (analogTriggered)
