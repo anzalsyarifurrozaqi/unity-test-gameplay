@@ -1,13 +1,15 @@
 #Directories
-.vscode/
-Library/
-Logs/
-Temp/
-UserSettings/
-obj/
-Assets/StarterAssets/
+.vs/
+.vscode
+Library
+Logs
+Temp
+UserSettings
+obj
+AssetsStarterAssets
 
 #Files
 Assembly-Csharp.csproj
 Assembly-Csharp-Editor.csproj
 unity-test-gameplay.sln
+.vsconfig
