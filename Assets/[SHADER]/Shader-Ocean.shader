@@ -13,9 +13,7 @@ Shader "Unlit/Shader-Ocean" {
     {
         // SubShader Tags define when and under which conditions a SubShader block or
         // a pass is executed.
-        Tags { "RenderType" = "Opaque" "RenderPipeline" = "UniversalRenderPipeline" "Queue" = "Transparent" }
-
-        ZWrite Off
+        Tags { "RenderType" = "Opaque" "RenderPipeline" = "UniversalRenderPipeline" "Queue" = "Transparent" }                
 
         Pass
         {
@@ -40,6 +38,7 @@ Shader "Unlit/Shader-Ocean" {
                 // The positionOS variable contains the vertex positions in object
                 // space.
                 float4 positionOS   : POSITION;
+                float3 normal       : NORMAL;
                 float2 uv0          : TEXCOORD0;
             };
 
@@ -47,8 +46,10 @@ Shader "Unlit/Shader-Ocean" {
             {
                 // The positions in this struct must have the SV_POSITION semantic.
                 float4 positionHCS  : SV_POSITION;
-                float2 uv           : TEXCOORD0;
-                float4 screenSpace  : TEXCOORD1;
+                float3 normal       : TEXCOORD0;
+                float2 uv           : TEXCOORD1;
+                float4 screenSpace  : TEXCOORD2;
+                float3 wPos         : TEXCOORD3;
             };            
 
             sampler2D _MainTex;
@@ -67,6 +68,8 @@ Shader "Unlit/Shader-Ocean" {
                 // The TransformObjectToHClip function transforms vertex positions
                 // from object space to homogenous space
                 OUT.positionHCS = TransformObjectToHClip(IN.positionOS.xyz);
+                OUT.normal = TransformWorldToObjectNormal (IN.normal);
+                OUT.wPos = mul (unity_ObjectToWorld, IN.positionOS);
                 OUT.uv = TRANSFORM_TEX(IN.uv0, _MainTex);                
                 OUT.screenSpace = ComputeScreenPos(OUT.positionHCS);
                 return OUT;
@@ -86,12 +89,27 @@ Shader "Unlit/Shader-Ocean" {
             // The fragment shader definition.            
             float4 frag(Interpolators i) : SV_Target
             {                
+                // specular lighting
+                float3 N = normalize ( i.normal );
+                float3 L = _MainLightPosition.xyz;
+                float3 lambert = saturate(dot(N, L));
+                float3 V = normalize ( GetCameraPositionWS() - i.wPos);
+                float H = normalize(L + V);
+                // float3 R = reflect ( -L, N);
+                // float3 specularLight = saturate(dot(V, R)); // uses for Phong
+                float3 specularLight = saturate(dot(H, N)) * (lambert > 0); // blinn-Phong                
+                // return float4(specularLight.xxx, 1);
+
+                // fresnel
+                float fresnel = dot (V, N);
+                // return fresnel;
+
                 float4 col = tex2D(_MainTex, i.uv);
                 float2 screenSpaceUV = i.screenSpace.xy / i.screenSpace.w;
 
                 float depth = Linear01Depth(SampleCameraDepth(screenSpaceUV), _ZBufferParams);
-                float3 color = lerp(_ColorA, _ColorB, depth);
-                return float4(color,1);
+                float3 color = lerp(_ColorA, _ColorB, depth + fresnel);
+                return float4 ( specularLight + color, 1);
             }
             ENDHLSL
         }
