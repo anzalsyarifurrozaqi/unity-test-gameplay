@@ -13,10 +13,10 @@ Shader "Unlit/Shader-Ocean" {
     {
         // SubShader Tags define when and under which conditions a SubShader block or
         // a pass is executed.
-        Tags { "RenderType" = "Opaque" "RenderPipeline" = "UniversalRenderPipeline" "Queue" = "Transparent" }                
+        Tags { "RenderType" = "Transparent" "RenderPipeline" = "UniversalRenderPipeline" "Queue" = "Transparent" }                
 
         Pass
-        {
+        {                        
             // The HLSL code block. Unity SRP uses the HLSL language.
             HLSLPROGRAM
             // This line defines the name of the vertex shader. 
@@ -88,7 +88,8 @@ Shader "Unlit/Shader-Ocean" {
 
             // The fragment shader definition.            
             float4 frag(Interpolators i) : SV_Target
-            {                
+            {            
+                
                 // specular lighting
                 float3 N = normalize ( i.normal );
                 float3 L = _MainLightPosition.xyz;
@@ -109,9 +110,15 @@ Shader "Unlit/Shader-Ocean" {
 
                 float depth = Linear01Depth(SampleCameraDepth(screenSpaceUV), _ZBufferParams);
                 float3 color = lerp(_ColorA, _ColorB, depth + fresnel);
-                return float4 ( specularLight + color, 1);
+                color += specularLight;
+                return float4 ( color, 1);                
+
+                // Depth Mask
+                float depthMask = depth - i.screenSpace.w;
+                depthMask = saturate(depthMask);
+                return float4 ( 0,0,0, depthMask);
             }
             ENDHLSL
         }
-    }
+    }    
 }
