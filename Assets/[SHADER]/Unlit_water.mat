@@ -20,14 +20,18 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 2800000, guid: baea7dad4e6c37341bd168583a0fd46f, type: 3}
+    - _BaseMap:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
-    m_Floats: []
+    m_Floats:
+    - _Depth: 9
     m_Colors:
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _ColorA: {r: 1, g: 1, b: 1, a: 1}
-    - _ColorB: {r: 1, g: 1, b: 1, a: 1}
+    - _DeepColor: {r: 0, g: 0.04, b: 0.17, a: 0.92}
+    - _Foam: {r: 1, g: 120, b: 5, a: 1}
+    - _FoamColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Refraction: {r: 0.002, g: 40, b: 1, a: 1}
+    - _ShallowColor: {r: 0.27, g: 0.58, b: 0.76, a: 0.57}
+    - _Wave: {r: 1, g: 1, b: 0.2, a: 1}
   m_BuildTextureStacks: []
