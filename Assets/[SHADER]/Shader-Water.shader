@@ -10,6 +10,7 @@ Shader "Universal Render Pipeline/water"
         _Foam("Foam: Amount(x) Scale(y) Cutoff(z) Speed(w)", Vector) = (1, 120, 5, 1)
         _Refraction("Refraction: Strength(x) Scale(y) Speed(z)", Vector) = (0.002, 40, 1)
         _Wave("Wave: Velocity(x, y) Intensity(z)", Vector) = (1, 1, 0.2)
+        _SpecularExponent("Specular Exponent", float) = 1
     }
     SubShader
     {
@@ -43,19 +44,23 @@ Shader "Universal Render Pipeline/water"
         float4 _Foam;
         float3 _Refraction;
         float3 _Wave;
+        float _SpecularExponent;
 
         struct MeshData
         {
-            float4 positionOS       : POSITION; // position object space
-            float2 uv               : TEXCOORD0;
+            float4 positionOS           : POSITION; // position object space
+            float3 normal               : NORMAL;
+            float2 uv                   : TEXCOORD0;
             UNITY_VERTEX_INPUT_INSTANCE_ID
         };
 
         struct Interpolators
         {
             float4 positionCS           : SV_POSITION; // position clip space
-            float2 uv                   : TEXCOORD0;                
-            float4 screenPos            : TEXCOORD1;            
+            float3 normal               : TEXCOORD0;
+            float2 uv                   : TEXCOORD1;                
+            float4 screenPos            : TEXCOORD2;
+            float3 positionWS           : TEXCOORD3;
         };            
         
         ENDHLSL
@@ -146,24 +151,41 @@ Shader "Universal Render Pipeline/water"
                 UNITY_SETUP_INSTANCE_ID(v);
                 Interpolators o;                
                 o.uv = TRANSFORM_TEX(v.uv, _BaseMap);
-                float3 positionWS = TransformObjectToWorld(v.positionOS.xyz); // vertex position in world space
+                o.normal = v.normal;
+                o.positionWS = TransformObjectToWorld(v.positionOS.xyz); // vertex position in world space
                 float positionWSNoise;
-                Unity_GradientNoise_float(positionWS.xz + _Time.y * _Wave.xy, 1, positionWSNoise);
+                Unity_GradientNoise_float(o.positionWS.xz + _Time.y * _Wave.xy, 1, positionWSNoise);
                 float3 displacement = float3(0, positionWSNoise * _Wave.z, 0);
-                positionWS += displacement;
-                o.positionCS = mul(UNITY_MATRIX_VP, float4(positionWS, 1));
-                o.screenPos = ComputeScreenPos(o.positionCS);      
+                o.positionWS += displacement;
+                o.positionCS = mul(UNITY_MATRIX_VP, float4(o.positionWS, 1));
+                o.screenPos = ComputeScreenPos(o.positionCS);                      
 
                 return o;
             }
 
             float4 frag (Interpolators i) : SV_Target
             {
+                // Lighting
+                float3 N = normalize (i.normal);
+                float3 L = _MainLightPosition.xyz;
+
+                // Difuse lighting
+                float3 difuseLighting = saturate (dot (N,L)) * _MainLightColor.xyz;
+                // return float4(difuseLighting, 1);?
+
+                // Specular lighting
+                float3 V = normalize (GetCameraPositionWS() - i.positionWS);
+                float3 R = reflect (-L, N); // Reflect Vector
+                float3 specularLighting = saturate (dot (R, V));
+                specularLighting = pow (specularLighting, _SpecularExponent);
+                // return float4(specularLighting.xxx, 1);
+                // Screen Depth
                 float2 screenUV = i.screenPos.xy / i.screenPos.w;
                 float zEye = LinearEyeDepth (SampleSceneDepth(screenUV), _ZBufferParams);
 
                 float4 depthColor = lerp(_ShallowColor, _DeepColor, WaterDepthFade(zEye, i.screenPos, _Depth));
 
+                // Foam
                 float foam = WaterDepthFade(zEye, i.screenPos, _Foam.x) * _Foam.z;
                 float2 foamUV = i.uv * _Foam.y + (_Foam.w * _Time.y);
                 float foamUVNoise;
@@ -173,10 +195,14 @@ Shader "Universal Render Pipeline/water"
 
                 float4 waterColor = lerp(depthColor, _FoamColor, foamValue);
 
+                // Refract
                 float2 refractedUV = WaterRefractedUV(i.uv, _Refraction.x, _Refraction.y, _Refraction.z, screenUV);
                 float4 refractedSceneColor = float4(SampleSceneColor(refractedUV), 1);
 
-                return lerp(refractedSceneColor, waterColor, waterColor.a);
+                // return lerp(refractedSceneColor, waterColor, waterColor.a);
+                float4 outColor = lerp(refractedSceneColor, waterColor, waterColor.a);
+                float3 outColor1 = outColor.xyz + specularLighting;
+                return float4 (outColor1,1);
 
 
 
