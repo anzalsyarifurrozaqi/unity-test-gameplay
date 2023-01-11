@@ -11,6 +11,8 @@ Shader "Universal Render Pipeline/water"
         _Refraction("Refraction: Strength(x) Scale(y) Speed(z)", Vector) = (0.002, 40, 1)
         _Wave("Wave: Velocity(x, y) Intensity(z)", Vector) = (1, 1, 0.2)
         _SpecularExponent("Specular Exponent", float) = 1
+        _PositionTrack("Position Track", Vector) = (0, 0, 0)
+        _CenterWave("Scale(x) Speed(y) Frequency(z)", Vector) = (0, 0, 0)
     }
     SubShader
     {
@@ -45,6 +47,8 @@ Shader "Universal Render Pipeline/water"
         float3 _Refraction;
         float3 _Wave;
         float _SpecularExponent;
+        float3 _PositionTrack;
+        float3 _CenterWave;
 
         struct MeshData
         {
@@ -157,6 +161,32 @@ Shader "Universal Render Pipeline/water"
                 Unity_GradientNoise_float(o.positionWS.xz + _Time.y * _Wave.xy, 1, positionWSNoise);
                 float3 displacement = float3(0, positionWSNoise * _Wave.z, 0);
                 o.positionWS += displacement;
+
+                float offsetvert = (((_PositionTrack.x + o.positionWS.x) * (_PositionTrack.x + o.positionWS.x)) + ((_PositionTrack.y + o.positionWS.z) * (_PositionTrack.y + o.positionWS.z)));
+                
+                float value = _CenterWave.x * sin(_Time.w * _CenterWave.y - offsetvert * _CenterWave.z);
+
+                o.positionWS.y += value;
+                o.normal.z -= value;
+
+                // float waveHeight = 0;
+                // float distanceWave = sin(_Time.y * 1);
+                // if (distance(o.positionWS.xz, _PositionTrack.xy) <= distanceWave) {                    
+                //     waveHeight = (sin(_Time.y * _PositionTrack.z) * 0.5 + 0.5) * 0.1 ;
+                // }
+                // float2 positive = float2 (sin(_Time.y * 1) * 0.5 + 0.5, cos(_Time.y * 1) * 0.5 + 0.5);
+                // float2 negative = float2 (-sin(_Time.y * 1) * 0.5 - 0.5, -cos(_Time.y * 1) * 0.5 - 0.5);
+                // // _PositionTrack.y = cos(_Time.y * 1);
+                // if (distance(o.positionWS.x, positive.x) <= 0.1 || 
+                // distance(o.positionWS.x, negative.x) <= 0.1 ||
+                // distance(o.positionWS.z, positive.y) <= 0.1 ||
+                // distance(o.positionWS.z, negative.y) <= 0.1
+                // ) { 
+                //     waveHeight = sin(_Time.y * _PositionTrack.z) * 0.1;
+                // }
+
+                // o.positionWS.y = waveHeight;
+
                 o.positionCS = mul(UNITY_MATRIX_VP, float4(o.positionWS, 1));
                 o.screenPos = ComputeScreenPos(o.positionCS);                      
 
