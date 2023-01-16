@@ -5,7 +5,8 @@ namespace Player.Function
 {
     public class PlayerFunctionProcessor : MonoBehaviour
     {
-        public Dictionary<System.Type, PlayerFunction> DicFunctions = new Dictionary<System.Type, PlayerFunction>();        
+        public Dictionary<System.Type, PlayerFunction> DicFunctions = new Dictionary<System.Type, PlayerFunction>();
+        public Dictionary<System.Type, CharacterBaseFunction<ICharacterControl>> DicGlobalFunctions = new Dictionary<System.Type, CharacterBaseFunction<ICharacterControl>>();
 
         private void Start()
         {            
@@ -40,12 +41,12 @@ namespace Player.Function
             AddFunction(typeof(Look));
 
             AddFunction(typeof(ShotDirection));
+
+            AddGlobalFunction(typeof(TestGlobalFunction));
         }
 
-        void AddFunction(System.Type type)
-        {
-            if (type.IsSubclassOf(typeof(PlayerFunction)))
-            {
+        void AddFunction(System.Type type) {
+            if (type.IsSubclassOf(typeof(PlayerFunction))) {
                 GameObject obj = new GameObject();
                 obj.transform.parent = this.transform;
                 obj.transform.localPosition = Vector3.zero;
@@ -54,7 +55,24 @@ namespace Player.Function
                 PlayerFunction f = obj.AddComponent(type) as PlayerFunction;
                 DicFunctions.Add(type, f);
 
-                f.PlayerControl = GetComponentInParent<PlayerControl>();
+                f.PlayerControl = GetComponentInParent<PlayerControl>();                 
+
+                obj.name = type.ToString();
+                obj.name = obj.name;                
+            }
+        }
+
+        void AddGlobalFunction(System.Type type) {
+            if (type.IsSubclassOf(typeof(CharacterBaseFunction<ICharacterControl>))) {
+                GameObject obj = new GameObject();
+                obj.transform.parent = this.transform;
+                obj.transform.localPosition = Vector3.zero;
+                obj.transform.localRotation = Quaternion.identity;
+                
+                CharacterBaseFunction<ICharacterControl> f = obj.AddComponent(type) as CharacterBaseFunction<ICharacterControl>;
+                DicGlobalFunctions.Add(type, f);
+
+                f.CharacterControl = GetComponentInParent<PlayerControl>();
 
                 obj.name = type.ToString();
                 obj.name = obj.name;                

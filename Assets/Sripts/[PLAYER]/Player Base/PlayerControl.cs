@@ -6,7 +6,7 @@ using Player.Update;
 
 namespace Player
 {
-    public class PlayerControl : MonoBehaviour {
+    public class PlayerControl : MonoBehaviour, ICharacterControl {
 
         void OnAnimationMove() {
             Debug.Log("test");
@@ -117,6 +117,9 @@ namespace Player
         }        
 
         #region Functions
+        public void RunGlobalFunction(System.Type FunctionType) {
+            PlayerFunctionProcessor.DicGlobalFunctions[FunctionType].RunGlobalFunction();
+        }
         public void RunFunction(System.Type FunctionType) {
             PlayerFunctionProcessor.DicFunctions[FunctionType].RunFunction();
         }

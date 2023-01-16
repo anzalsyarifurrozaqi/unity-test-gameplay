@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace Player.Function {
-    public class PlayerFunction : MonoBehaviour {
+    public class PlayerFunction : MonoBehaviour {        
         public PlayerControl PlayerControl;
 
         public virtual void RunFunction() {

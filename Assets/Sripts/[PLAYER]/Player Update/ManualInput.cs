@@ -17,6 +17,9 @@ namespace Player.Update {
             cube.transform.position = Vector3.zero;
             cube.transform.rotation = Quaternion.identity;
             cube.GetComponent<Collider>().enabled = false;
+
+            // test global function
+            PlayerControl.RunGlobalFunction(typeof(TestGlobalFunction));
         }
         public override void OnUpdate()
         {
