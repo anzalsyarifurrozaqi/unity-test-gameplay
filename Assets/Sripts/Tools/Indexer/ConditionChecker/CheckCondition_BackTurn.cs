@@ -1,8 +1,8 @@
-using Character;
+using Player;
 using UnityEngine;
 
 public class CheckCondition_BackTurn : CheckConditionBase {
-    public override bool MeetCondition(CharacterControl control) {
+    public override bool MeetCondition(PlayerControl control) {
 
         var forward = control.transform.forward;
         var backward = -control.transform.forward;

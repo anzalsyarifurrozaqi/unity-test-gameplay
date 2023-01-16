@@ -1,6 +1,6 @@
 using UnityEngine;
-using Character;
+using Player;
 
 public abstract class CheckConditionBase : MonoBehaviour {
-    public abstract bool MeetCondition(CharacterControl control);
+    public abstract bool MeetCondition(PlayerControl control);
 }

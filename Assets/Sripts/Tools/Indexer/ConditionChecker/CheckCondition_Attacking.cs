@@ -1,8 +1,8 @@
 using System.Collections;
-using Character;
+using Player;
 
 public class CheckCondition_Attacking : CheckConditionBase {
-    public override bool MeetCondition(CharacterControl control) {
+    public override bool MeetCondition(PlayerControl control) {
         // if (control.Attack) {
         //     return true;
         // }

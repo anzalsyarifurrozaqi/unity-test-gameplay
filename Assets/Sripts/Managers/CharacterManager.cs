@@ -1,36 +1,36 @@
 using UnityEngine;
-using Character;
-using Character.Update;
+using Player;
+using Player.Update;
 using System.Collections.Generic;
 
 namespace Manager
 {
-    public class CharacterManager : Singleton<CharacterManager>
+    public class PlayerManager : Singleton<PlayerManager>
     {
-        public List<CharacterControl> Characters = new List<CharacterControl>();        
+        public List<PlayerControl> Players = new List<PlayerControl>();        
 
         [SerializeField]
-        CharacterControl[] ArrCharacters = null;
+        PlayerControl[] ArrPlayers = null;
 
         #region PULBIC METHOD
-        public CharacterControl GetCharacter(GameObject obj)
+        public PlayerControl GetPlayer(GameObject obj)
         {
-            for (int i = 0; i < ArrCharacters.Length; i++)
+            for (int i = 0; i < ArrPlayers.Length; i++)
             {
-                if (ArrCharacters[i].gameObject == obj)
+                if (ArrPlayers[i].gameObject == obj)
                 {
-                    return ArrCharacters[i];
+                    return ArrPlayers[i];
                 }
             }
 
             return null;
         }
 
-        public CharacterControl GetPlayableCharacter()
+        public PlayerControl GetPlayablePlayer()
         {
-            foreach (CharacterControl control in Characters)
+            foreach (PlayerControl control in Players)
             {
-                if (control.characterUpdateProcessor.DicUpdaters.ContainsKey(typeof(ManualInput)))
+                if (control.PlayerUpdateProcessor.DicUpdaters.ContainsKey(typeof(ManualInput)))
                 {
                     return control;
                 }
@@ -39,13 +39,13 @@ namespace Manager
             return null;
         }
 
-        public bool IsCharacterPlayable(GameObject characterObj)
+        public bool IsPlayerPlayable(GameObject PlayerObj)
         {
-            foreach (CharacterControl control in Characters)
+            foreach (PlayerControl control in Players)
             {
-                if (control.gameObject == characterObj)
+                if (control.gameObject == PlayerObj)
                 {
-                    if (control.characterUpdateProcessor.DicUpdaters.ContainsKey(typeof(ManualInput)))
+                    if (control.PlayerUpdateProcessor.DicUpdaters.ContainsKey(typeof(ManualInput)))
                     {
                         return true;
                     }
@@ -62,54 +62,54 @@ namespace Manager
         }
         private void Update()
         {
-            InitCharacterArray();
+            InitPlayerArray();
 
-            for (int i = 0; i < ArrCharacters.Length; i++)
+            for (int i = 0; i < ArrPlayers.Length; i++)
             {
-                ArrCharacters[i].CharacterUpdate();
+                ArrPlayers[i].PlayerUpdate();
             }
         }
 
         private void FixedUpdate()
         {
-            InitCharacterArray();
+            InitPlayerArray();
 
-            for (int i = 0; i < ArrCharacters.Length; i++)
+            for (int i = 0; i < ArrPlayers.Length; i++)
             {
-                ArrCharacters[i].CharacterFixedUpdate();
+                ArrPlayers[i].PlayerFixedUpdate();
             }
         }
 
         private void LateUpdate()
         {
-            InitCharacterArray();
+            InitPlayerArray();
 
-            for (int i = 0; i < ArrCharacters.Length; i++)
+            for (int i = 0; i < ArrPlayers.Length; i++)
             {
-                ArrCharacters[i].CharacterLateUpdate();
+                ArrPlayers[i].PlayerLateUpdate();
             }
         }
 
         private void OnAnimatorMove() {
-            InitCharacterArray();
+            InitPlayerArray();
 
-            for (int i = 0; i < ArrCharacters.Length; i++) {
-                // ArrCharacters[i].CharacterIbAnimatorMove();
+            for (int i = 0; i < ArrPlayers.Length; i++) {
+                // ArrPlayers[i].PlayerIbAnimatorMove();
             }
         }
 
         #endregion
 
         #region UTIL METHOD
-        void InitCharacterArray()
+        void InitPlayerArray()
         {            
-            if (ArrCharacters == null || ArrCharacters.Length != Characters.Count)
+            if (ArrPlayers == null || ArrPlayers.Length != Players.Count)
             {
-                ArrCharacters = new CharacterControl[Characters.Count];
+                ArrPlayers = new PlayerControl[Players.Count];
 
-                for (int i = 0; i < Characters.Count; i++)
+                for (int i = 0; i < Players.Count; i++)
                 {
-                    ArrCharacters[i] = Characters[i];
+                    ArrPlayers[i] = Players[i];
                 }
             }
         }

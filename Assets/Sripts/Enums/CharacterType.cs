@@ -1,6 +1,6 @@
 namespace Enum
 {
-    public enum CharacterType
+    public enum PlayerType
     {
         PLAYER,
         ENEMY

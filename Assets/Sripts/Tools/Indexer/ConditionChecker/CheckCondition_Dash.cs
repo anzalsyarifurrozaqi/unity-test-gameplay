@@ -1,7 +1,7 @@
-using Character;
+using Player;
 
 public class CheckCondition_Dash : CheckConditionBase {
-    public override bool MeetCondition(CharacterControl control) {
+    public override bool MeetCondition(PlayerControl control) {
         // if (control.Dash) {
         //     return true;
         // }

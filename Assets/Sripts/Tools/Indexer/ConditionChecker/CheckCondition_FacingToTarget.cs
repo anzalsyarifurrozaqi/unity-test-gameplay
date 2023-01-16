@@ -1,8 +1,8 @@
-using Character;
+using Player;
 using UnityEngine;
 
 public class CheckCondition_FacingToTarget : CheckConditionBase {
-    public override bool MeetCondition(CharacterControl control) {        
+    public override bool MeetCondition(PlayerControl control) {        
         RaycastHit hit;
         if (Physics.Raycast(control.transform.position, control.transform.forward, out hit, float.MaxValue, LayerMask.GetMask("Target"))) {
             Debug.Log(hit.transform.name);
