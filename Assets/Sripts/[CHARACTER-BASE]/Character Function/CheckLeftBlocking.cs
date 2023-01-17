@@ -1,5 +1,4 @@
 using UnityEngine;
-using Player.Function;
 
 namespace Character.Base.Function {
     public class CheckLeftBlocking : CharacterBaseFunction<ICharacterControl> {

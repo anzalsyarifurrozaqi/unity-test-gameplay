@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Player
+namespace Character.Base
 {
     public abstract class CharacterAbility : ScriptableObject
     {

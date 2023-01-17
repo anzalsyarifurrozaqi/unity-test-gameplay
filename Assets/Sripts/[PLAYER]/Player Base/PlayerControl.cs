@@ -18,6 +18,8 @@ namespace Player
 
         [Header("Input")]
         public Vector2 Move;
+        public Vector2 MOVE => Move;
+        
         public Vector2 Look;
         public bool IsShoot;
 
@@ -88,6 +90,7 @@ namespace Player
         private BoxCollider _rootCollider;        
         BoxCollider ICharacterControl.BOX_COLLIDER => BOX_COLLIDER;
 
+
         public PlayerUpdate GetUpdater(System.Type UpdaterType)
         {
             if (PlayerUpdateProcessor.DicUpdaters.ContainsKey(UpdaterType))
@@ -100,23 +103,23 @@ namespace Player
             }
         }
         
-        public void InitalizePlayer()
+        public void InitializeCharacter()
         {
             RunFunction(typeof(InitPlayer), this);
 
             PlayerUpdateProcessor.InitUpdaters();
         }
 
-        public void PlayerUpdate()
+        public void CharacterUpdate()
         {            
             PlayerUpdateProcessor.RunPlayerUpdate();
         }
 
-        public void PlayerFixedUpdate()
+        public void CharacterFixedUpdate()
         {
             PlayerUpdateProcessor.RunPlayerFixedUpdate();
         }
-        public void PlayerLateUpdate()
+        public void CharacterLateUpdate()
         {
             PlayerUpdateProcessor.RunPlayerLateUpdate();
         }        

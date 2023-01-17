@@ -1,6 +1,4 @@
 using UnityEngine;
-using Player.Function;
-using Character.Base;
 
 namespace Character.Base.Function {
     public class Reposition_Spheres_Front : CharacterBaseFunction<ICharacterControl> {    

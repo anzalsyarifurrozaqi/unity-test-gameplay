@@ -3,6 +3,7 @@ using UnityEngine;
 using Player;
 using Enum;
 using Manager;
+using Character.Base;
 
 namespace Ablilities {
     [CreateAssetMenu(fileName = "New State", menuName ="Player/PlayerAbilities/TransitionIndexer")]

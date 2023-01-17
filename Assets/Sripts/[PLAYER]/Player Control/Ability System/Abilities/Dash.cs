@@ -1,6 +1,7 @@
 using UnityEngine;
 using Player;
 using Player.Function;
+using Character.Base;
 
 namespace Ablilities {
     [CreateAssetMenu(fileName = "New State", menuName = "Player/PlayerAbilities/Dash")]
@@ -12,7 +13,7 @@ namespace Ablilities {
         }
         public override void UpdateAbility(CharacterState CharacterState, Animator animator, AnimatorStateInfo stateInfo)
         {
-            CharacterState.control.RunFunction(typeof(DashForward));
+            // CharacterState.control.RunFunction(typeof(DashForward));
         }
         public override void OnExit(CharacterState CharacterState, Animator animator, AnimatorStateInfo stateInfo)
         {

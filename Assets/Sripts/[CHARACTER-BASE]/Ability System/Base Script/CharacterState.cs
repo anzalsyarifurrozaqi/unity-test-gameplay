@@ -1,16 +1,16 @@
 using UnityEngine;
-using Dataset;
+using Character.Base.Dataset;
 
-namespace Player
+namespace Character.Base
 {
     public class CharacterState : StateMachineBehaviour
     {
-        public PlayerControl control;
+        public ICharacterControl control;
         
         [Space(10)]
         public CharacterAbility[] ArrAbilities;
         
-        public PlayerDatasets DATASET => control.DATASET;
+        public IDataset DATASET => control.DATASET;
         
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {            

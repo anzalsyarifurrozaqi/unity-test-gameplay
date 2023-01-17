@@ -1,5 +1,6 @@
 using UnityEngine;
 using Player;
+using Character.Base;
 
 namespace Ablilities {
     [CreateAssetMenu(fileName = "New State", menuName ="Player/PlayerAbilities/Idle")]

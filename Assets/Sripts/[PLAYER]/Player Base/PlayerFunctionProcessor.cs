@@ -16,7 +16,7 @@ namespace Player.Function
             SetDeafaultFunction();
 
             PlayerControl control = GetComponentInParent<PlayerControl>();
-            control.InitalizePlayer();
+            control.InitializeCharacter();
         }
 
         void SetDeafaultFunction()

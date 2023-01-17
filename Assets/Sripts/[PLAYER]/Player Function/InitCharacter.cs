@@ -1,6 +1,7 @@
 using Player.Update;
 using Player.Query;
 using Manager;
+using Character.Base;
 
 namespace Player.Function
 {
@@ -19,9 +20,9 @@ namespace Player.Function
 
         void RegisterPlayer(PlayerControl PlayerControl)
         {
-            if (!PlayerManager.Instance.Players.Contains(PlayerControl))
+            if (!CharacterManager.Instance.Players.Contains(PlayerControl))
             {
-                PlayerManager.Instance.Players.Add(PlayerControl);
+                CharacterManager.Instance.Players.Add(PlayerControl);
             }
         }
 

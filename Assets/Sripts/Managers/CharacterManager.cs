@@ -1,13 +1,15 @@
 using UnityEngine;
 using Player;
 using Player.Update;
+using Zombie;
 using System.Collections.Generic;
 
 namespace Manager
 {
-    public class PlayerManager : Singleton<PlayerManager>
+    public class CharacterManager : Singleton<CharacterManager>
     {
-        public List<PlayerControl> Players = new List<PlayerControl>();        
+        public List<PlayerControl> Players = new List<PlayerControl>();
+        public List<ZombieControl> Zombies = new List<ZombieControl>();
 
         [SerializeField]
         PlayerControl[] ArrPlayers = null;
@@ -66,7 +68,7 @@ namespace Manager
 
             for (int i = 0; i < ArrPlayers.Length; i++)
             {
-                ArrPlayers[i].PlayerUpdate();
+                ArrPlayers[i].CharacterUpdate();
             }
         }
 
@@ -76,7 +78,7 @@ namespace Manager
 
             for (int i = 0; i < ArrPlayers.Length; i++)
             {
-                ArrPlayers[i].PlayerFixedUpdate();
+                ArrPlayers[i].CharacterFixedUpdate();
             }
         }
 
@@ -86,7 +88,7 @@ namespace Manager
 
             for (int i = 0; i < ArrPlayers.Length; i++)
             {
-                ArrPlayers[i].PlayerLateUpdate();
+                ArrPlayers[i].CharacterLateUpdate();
             }
         }
 

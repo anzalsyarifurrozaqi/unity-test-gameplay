@@ -1,7 +1,7 @@
-using System.Collections.Generic;
-using Player;
 
-namespace Dataset
+using System.Collections.Generic;
+
+namespace Character.Base.Dataset
 {
     [System.Serializable]
     public class AbilityData
