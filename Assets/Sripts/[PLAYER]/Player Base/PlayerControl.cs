@@ -1,8 +1,10 @@
 using UnityEngine;
+using Character.Base;
 using Dataset;
 using Player.Function;
 using Player.Query;
 using Player.Update;
+using Character.Base.Dataset;
 
 namespace Player
 {
@@ -40,6 +42,8 @@ namespace Player
 
         private PlayerDatasets _PlayerDatasets;
 
+        IDataset ICharacterControl.DATASET { get => DATASET; }        
+        
         public Rigidbody RIGID_BODY
         {
             get
@@ -82,6 +86,7 @@ namespace Player
             }
         }
         private BoxCollider _rootCollider;        
+        BoxCollider ICharacterControl.BOX_COLLIDER => BOX_COLLIDER;
 
         public PlayerUpdate GetUpdater(System.Type UpdaterType)
         {
@@ -120,6 +125,11 @@ namespace Player
         public void RunGlobalFunction(System.Type FunctionType) {
             PlayerFunctionProcessor.DicGlobalFunctions[FunctionType].RunGlobalFunction();
         }
+        public void RunGlobalFunction(System.Type FunctionType, float value1) {
+            PlayerFunctionProcessor.DicGlobalFunctions[FunctionType].RunGlobalFunction(value1);
+        }
+
+
         public void RunFunction(System.Type FunctionType) {
             PlayerFunctionProcessor.DicFunctions[FunctionType].RunFunction();
         }

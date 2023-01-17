@@ -1,11 +1,13 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Character.Base;
+using Character.Base.Update;
 using Enum;
 
 namespace Player.Update {
     public class PlayerUpdateProcessor : MonoBehaviour {
         public Dictionary<System.Type, PlayerUpdate> DicUpdaters = new Dictionary<System.Type, PlayerUpdate>();        
-        public Dictionary<System.Type, CharacterBaseUpdate> DicGlobalUpdaters = new Dictionary<System.Type, CharacterBaseUpdate>();
+        public Dictionary<System.Type, CharacterBaseUpdate<ICharacterControl>> DicGlobalUpdaters = new Dictionary<System.Type, CharacterBaseUpdate<ICharacterControl>>();
 
         public PlayerControl control {
             get {
@@ -27,11 +29,12 @@ namespace Player.Update {
         }
 
         void SetDefaultUpdates() {
-            AddUpdater(typeof(TargetDistance));
-            AddUpdater(typeof(CollisionSphere));
-            AddUpdater(typeof(BlockingObject));
+            // AddUpdater(typeof(TargetDistance));
+            
+            AddGlobalUpdater(typeof(TestGlobalUpdate));
+            AddGlobalUpdater(typeof(CollisionSphere));
+            AddGlobalUpdater(typeof(BlockingObject));
 
-            AddUpdater(typeof(TestGlobalUpdate));
         }
 
         void AddUpdater(System.Type UpdaterType) {
@@ -39,7 +42,10 @@ namespace Player.Update {
                 _AddUpdater(UpdaterType);
             }
 
-            if (UpdaterType.IsSubclassOf(typeof(CharacterBaseUpdate))) {
+        }
+
+        void AddGlobalUpdater(System.Type UpdaterType) {
+            if (UpdaterType.IsSubclassOf(typeof(CharacterBaseUpdate<ICharacterControl>))) {
                 _AddGlobalUpdater(UpdaterType);
             }
         }
@@ -66,12 +72,12 @@ namespace Player.Update {
             obj.transform.parent = this.transform;
             obj.transform.localPosition = Vector3.zero;
             obj.transform.localRotation = Quaternion.identity;
-            CharacterBaseUpdate u = obj.AddComponent(UpdaterType) as CharacterBaseUpdate;
-            // u.PlayerControl = GetComponentInParent<PlayerControl>();
+            CharacterBaseUpdate<ICharacterControl> u = obj.AddComponent(UpdaterType) as CharacterBaseUpdate<ICharacterControl>;
+            u.CharacterControl = GetComponentInParent<PlayerControl>();
 
             DicGlobalUpdaters.Add(UpdaterType, u);
 
-            // u.InitComponent();            
+            u.InitComponent();            
         }
 
         public void RunPlayerFixedUpdate() {

@@ -1,7 +1,9 @@
 using UnityEngine;
 using Player.Update;
+using Character.Base;
+using Character.Base.Function;
 
-public class CollisionSphere : PlayerUpdate {
+public class CollisionSphere : CharacterBaseUpdate<ICharacterControl> {
     GameObject Front = null;
     GameObject Back = null;
     GameObject Right = null;
@@ -15,58 +17,58 @@ public class CollisionSphere : PlayerUpdate {
         SetCollisionSpheres();
     }
 
-    private void SetCollisionSpheres() {
-        CollisionSpheresData collisionSpheresData = PlayerControl.DATASET.COLLISION_SPHERES_DATA;
+    private void SetCollisionSpheres() {        
+        CollisionSpheresData collisionSpheresData = CharacterControl.DATASET.COLLISION_SPHERES_DATA;        
 
         // Front
         for (int i = 0; i < 3; ++i) {
-            GameObject collisionSphere = LoadCollisionSphresObject();
+            GameObject collisionSphere = LoadCollisionSpheresObject();
 
             collisionSpheresData.FrontSpheres[i] = collisionSphere;
             collisionSphere.transform.parent = Front.transform;
         }
 
-        PlayerControl.RunFunction(typeof(Reposition_Spheres_Front));
+        CharacterControl.RunGlobalFunction(typeof(Reposition_Spheres_Front));
 
         // Back
         for (int i = 0; i < 3; ++i) {
-            GameObject collisionSphere = LoadCollisionSphresObject();
+            GameObject collisionSphere = LoadCollisionSpheresObject();
 
             collisionSpheresData.BackSpheres[i] = collisionSphere;
             collisionSphere.transform.parent = Back.transform;            
         }
 
-        PlayerControl.RunFunction(typeof(Reposition_Spheres_Back));
+        CharacterControl.RunGlobalFunction(typeof(Reposition_Spheres_Back));
 
         // Left
         for (int i = 0; i < 3; ++i) {
-            GameObject collisionSphere = LoadCollisionSphresObject();
+            GameObject collisionSphere = LoadCollisionSpheresObject();
 
             collisionSpheresData.LeftSpheres[i] = collisionSphere;
             collisionSphere.transform.parent = Left.transform;
         }
 
-        PlayerControl.RunFunction(typeof(Reposition_Spheres_Left));
+        CharacterControl.RunGlobalFunction(typeof(Reposition_Spheres_Left));
 
         // Right
         for (int i = 0; i < 3; ++i) {
-            GameObject collisionSphere = LoadCollisionSphresObject();
+            GameObject collisionSphere = LoadCollisionSpheresObject();
 
             collisionSpheresData.RightSpheres[i] = collisionSphere;
             collisionSphere.transform.parent = Right.transform;            
         }
 
-        PlayerControl.RunFunction(typeof(Reposition_Spheres_Right));
+        CharacterControl.RunGlobalFunction(typeof(Reposition_Spheres_Right));
 
         // Bottom
         for (int i = 0; i < 3; ++i) {
-            GameObject collisionSphere = LoadCollisionSphresObject();
+            GameObject collisionSphere = LoadCollisionSpheresObject();
 
             collisionSpheresData.BottomSpheres[i] = collisionSphere;
             collisionSphere.transform.parent = Bottom.transform;            
         }
 
-        PlayerControl.RunFunction(typeof(Reposition_Spheres_Bottom));
+        CharacterControl.RunGlobalFunction(typeof(Reposition_Spheres_Bottom));
     }
 
     private void SetParent() {
@@ -85,7 +87,7 @@ public class CollisionSphere : PlayerUpdate {
         obj.transform.localRotation = Quaternion.identity;
     }
 
-    private GameObject LoadCollisionSphresObject() {
+    private GameObject LoadCollisionSpheresObject() {
         GameObject obj = Instantiate(Resources.Load("CollisionSphere", typeof(GameObject))) as GameObject;
         obj.transform.localPosition = Vector3.zero;
         obj.transform.localRotation = Quaternion.identity;

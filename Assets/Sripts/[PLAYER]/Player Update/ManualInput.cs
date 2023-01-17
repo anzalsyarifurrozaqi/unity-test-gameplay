@@ -2,6 +2,7 @@ using UnityEngine;
 using Manager;
 using Player.Function;
 using Enum;
+using Character.Base.Function;
 
 namespace Player.Update {
     public class ManualInput : PlayerUpdate {

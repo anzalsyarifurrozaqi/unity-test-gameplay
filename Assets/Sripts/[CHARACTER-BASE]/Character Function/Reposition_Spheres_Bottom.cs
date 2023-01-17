@@ -1,11 +1,12 @@
 using UnityEngine;
 using Player.Function;
+using Character.Base;
 
-public class Reposition_Spheres_Bottom : PlayerFunction {
-    public override void RunFunction() {
-        CollisionSpheresData collisionSpheresData = PlayerControl.DATASET.COLLISION_SPHERES_DATA;
-        BoxCollider boxCollider = PlayerControl.BOX_COLLIDER;
-        Vector3 PlayerPosition = PlayerControl.transform.position;
+public class Reposition_Spheres_Bottom : CharacterBaseFunction<ICharacterControl> {
+    public override void RunGlobalFunction() {
+        CollisionSpheresData collisionSpheresData = CharacterControl.DATASET.COLLISION_SPHERES_DATA;
+        BoxCollider boxCollider = CharacterControl.BOX_COLLIDER;
+        Vector3 PlayerPosition = CharacterControl.transform.position;
         
         float bottom = boxCollider.bounds.center.y - (boxCollider.bounds.size.y / 2f);
         float back = boxCollider.bounds.center.z - (boxCollider.bounds.size.z / 2f);

@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Character.Base;
+using Character.Base.Function;
 
 namespace Player.Function
 {
@@ -20,29 +22,30 @@ namespace Player.Function
         void SetDeafaultFunction()
         {
             AddFunction(typeof(InitPlayer));
+
+
             // AddFunction(typeof(CalculateDirection));
             // AddFunction(typeof(MoveForward));
             // AddFunction(typeof(FaceToTarget));
-            // AddFunction(typeof(DashForward));
+            // AddFunction(typeof(DashForward)); 
 
-            AddFunction(typeof(Reposition_Spheres_Front));
-            AddFunction(typeof(Reposition_Spheres_Back));
-            AddFunction(typeof(Reposition_Spheres_Left));
-            AddFunction(typeof(Reposition_Spheres_Right));
-            AddFunction(typeof(Reposition_Spheres_Bottom));
-
-            AddFunction(typeof(CheckFrontBlocking));
-            AddFunction(typeof(CheckBackBlocking));
-            AddFunction(typeof(CheckRightBlocking));
-            AddFunction(typeof(CheckLeftBlocking));
 
             // AddFunction(typeof(SetTransform));
+            AddFunction(                                    typeof(Look));
+            AddFunction(                                    typeof(ShotDirection));           
+            
+             
+            AddGlobalFunction(                              typeof(TestGlobalFunction));            
 
-            AddFunction(typeof(Look));
-
-            AddFunction(typeof(ShotDirection));
-
-            AddGlobalFunction(typeof(TestGlobalFunction));
+            AddGlobalFunction(                              typeof(CheckFrontBlocking));
+            AddGlobalFunction(                              typeof(CheckBackBlocking));
+            AddGlobalFunction(                              typeof(CheckRightBlocking));
+            AddGlobalFunction(                              typeof(CheckLeftBlocking));
+            AddGlobalFunction(                              typeof(Reposition_Spheres_Front));
+            AddGlobalFunction(                              typeof(Reposition_Spheres_Back));
+            AddGlobalFunction(                              typeof(Reposition_Spheres_Left));
+            AddGlobalFunction(                              typeof(Reposition_Spheres_Right));
+            AddGlobalFunction(                              typeof(Reposition_Spheres_Bottom));
         }
 
         void AddFunction(System.Type type) {

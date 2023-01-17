@@ -1,7 +1,11 @@
 using UnityEngine;
 
-public class CharacterBaseUpdate : MonoBehaviour {
-    public virtual void OnUpdate() {}
-    public virtual void OnFixedUpdate() {}
-    public virtual void OnLateUpdate() {}
+namespace Character.Base {
+    public class CharacterBaseUpdate<TCharacterControl> : MonoBehaviour where TCharacterControl : ICharacterControl {
+        public TCharacterControl CharacterControl;
+        public virtual void InitComponent(){}
+        public virtual void OnUpdate() {}
+        public virtual void OnFixedUpdate() {}
+        public virtual void OnLateUpdate() {}
+    }
 }
