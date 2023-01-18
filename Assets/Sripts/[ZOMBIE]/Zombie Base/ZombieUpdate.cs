@@ -1,18 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ZombieUpdate : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+namespace Zombie.Update {
+    public class ZombieUpdate : MonoBehaviour {
+        public ZombieControl ZombieControl;
+        public virtual void InitComponent(){}
+        public virtual void OnLateUpdate(){}
+        public virtual void OnUpdate(){}
+        public virtual void OnFixedUpdate(){}
     }
 }

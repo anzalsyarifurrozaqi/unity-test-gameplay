@@ -2,6 +2,8 @@ using UnityEngine;
 using Character.Base;
 using Character.Base.Dataset;
 using Zombie.Function;
+using Zombie.Update;
+using Zombie.Dataset;
 
 namespace Zombie {
     public class ZombieControl : MonoBehaviour, ICharacterControl {
@@ -10,30 +12,80 @@ namespace Zombie {
         public ZombieFunctionProcessor ZombieFunctionProcessor;
         public ZombieUpdateProcessor ZombieUpdateProcessor;
         public ZombieQueryProcessor ZombieQueryProcessor;
-        public BoxCollider BOX_COLLIDER => throw new System.NotImplementedException();
+        public BoxCollider BOX_COLLIDER {
+            get {
+                if (_rootCollider == null) {
+                    _rootCollider = GetComponent<BoxCollider>();
+                }
+                return _rootCollider;
+            }
+        }
+        private BoxCollider _rootCollider;
 
-        public IDataset DATASET => throw new System.NotImplementedException();
+        public ZombieDataset DATASET {
+            get {
+                if (_zombieDataset == null) {
+                    _zombieDataset = GetComponent<ZombieDataset>();
+                }
+                return _zombieDataset;
+            }
+        }
 
-        public Rigidbody RIGID_BODY => throw new System.NotImplementedException();
+        private ZombieDataset _zombieDataset;
+        IDataset ICharacterControl.DATASET => DATASET;
 
-        public Animator ANIMATOR => throw new System.NotImplementedException();
+        public Rigidbody RIGID_BODY {
+            get {
+                if (_rigidBody == null) {
+                    _rigidBody = GetComponent<Rigidbody>();
+                }
+                return _rigidBody;
+            }
+        }
+        private Rigidbody _rigidBody;
+
+        public Animator ANIMATOR {
+            get {
+                if (_animator == null) {
+                    _animator = GetComponentInChildren<Animator>();
+                }
+                return _animator;
+            }
+        }
+        private Animator _animator;
 
         public Vector2 MOVE => throw new System.NotImplementedException();
 
         public void InitializeCharacter() {
-            throw new System.NotImplementedException();
+            RunFunction(typeof(InitZombie), this);
+
+            ZombieUpdateProcessor.InitUpdaters();
         }
         public void CharacterUpdate() {
-            throw new System.NotImplementedException();
+            ZombieUpdateProcessor.RunCharacterUpdate();
         }
 
         public void CharacterFixedUpdate() {
-            throw new System.NotImplementedException();
+            ZombieUpdateProcessor.RunCharacterFixedUpdate();
         }
 
         public void CharacterLateUpdate() {
-            throw new System.NotImplementedException();
+            ZombieUpdateProcessor.RunCharacterLateUpdate();
         }
 
+        public void RunGlobalFunction(System.Type type) {
+            ZombieFunctionProcessor.DicGlobalFunctions[type].RunGlobalFunction();
+        }
+
+        public void RunFunction(System.Type type, ZombieControl zombieControl) {
+            if (ZombieFunctionProcessor == null) {
+                ZombieFunctionProcessor = GetComponentInChildren<ZombieFunctionProcessor>();
+            }
+            ZombieFunctionProcessor.DicFunctions[type].RunFunction(zombieControl);
+        }
+
+        public void RunFunction(System.Type type) {
+            ZombieFunctionProcessor.DicFunctions[type].RunFunction();
+        }
     }
 }

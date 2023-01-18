@@ -17,7 +17,7 @@ namespace Character.Base.Update {
             SetCollisionSpheres();
         }
 
-        private void SetCollisionSpheres() {        
+        private void SetCollisionSpheres() {            
             CollisionSpheresData collisionSpheresData = CharacterControl.DATASET.COLLISION_SPHERES_DATA;        
 
             // Front

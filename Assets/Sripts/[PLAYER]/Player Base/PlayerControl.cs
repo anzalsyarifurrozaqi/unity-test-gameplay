@@ -10,9 +10,9 @@ namespace Player
 {
     public class PlayerControl : MonoBehaviour, ICharacterControl {
 
-        void OnAnimationMove() {
-            Debug.Log("test");
-        }
+        // void OnAnimationMove() {
+        //     Debug.Log("test");
+        // }
         [Header("Debug Object")]
         public GameObject target;
 
@@ -29,79 +29,62 @@ namespace Player
         public PlayerUpdateProcessor PlayerUpdateProcessor;
         public PlayerQueryProcessor PlayerQueryProcessor;
 
-        public PlayerDatasets DATASET
-        {
-            get
-            {
-                if (_PlayerDatasets == null)
-                {
-                    _PlayerDatasets = GetComponent<PlayerDatasets>();                    
-                }
-
-                return _PlayerDatasets;
-            }
-        }
-
-        private PlayerDatasets _PlayerDatasets;
-
-        IDataset ICharacterControl.DATASET { get => DATASET; }        
-        
-        public Rigidbody RIGID_BODY
-        {
-            get
-            {
-                if (_rigidBody == null)
-                {
-                    _rigidBody = GetComponent<Rigidbody>();
-                }
-
-                return _rigidBody;
-            }
-        }
-
-        private Rigidbody _rigidBody;
-
-        public Animator ANIMATOR
-        {
-            get
-            {
-                if (_skinnedMeshAnimator == null)
-                {
-                    _skinnedMeshAnimator = GetComponentInChildren<Animator>();
-                }
-
-                return _skinnedMeshAnimator;
-            }
-        }
-        private Animator _skinnedMeshAnimator;
-
-        public BoxCollider BOX_COLLIDER
-        {
-            get
-            {
-                if (_rootCollider == null)
-                {
+         public BoxCollider BOX_COLLIDER {
+            get {
+                if (_rootCollider == null) {
                     _rootCollider = GetComponent<BoxCollider>();
                 }
-
                 return _rootCollider;
             }
         }
-        private BoxCollider _rootCollider;        
-        BoxCollider ICharacterControl.BOX_COLLIDER => BOX_COLLIDER;
+        private BoxCollider _rootCollider;
 
-
-        public PlayerUpdate GetUpdater(System.Type UpdaterType)
-        {
-            if (PlayerUpdateProcessor.DicUpdaters.ContainsKey(UpdaterType))
-            {
-                return PlayerUpdateProcessor.DicUpdaters[UpdaterType];
-            }
-            else
-            {
-                return null;
+        public PlayerDatasets DATASET {
+            get {
+                if (_zombieDataset == null) {
+                    _zombieDataset = GetComponent<PlayerDatasets>();
+                }
+                return _zombieDataset;
             }
         }
+
+        private PlayerDatasets _zombieDataset;
+        IDataset ICharacterControl.DATASET => DATASET;
+
+        public Rigidbody RIGID_BODY {
+            get {
+                if (_rigidBody == null) {
+                    _rigidBody = GetComponent<Rigidbody>();
+                }
+                return _rigidBody;
+            }
+        }
+        private Rigidbody _rigidBody;
+
+        public Animator ANIMATOR {
+            get {
+                if (_animator == null) {
+                    _animator = GetComponentInChildren<Animator>();
+                }
+                return _animator;
+            }
+        }
+
+
+        private Animator _animator;
+
+
+        // public PlayerUpdate GetUpdater(System.Type UpdaterType)
+        // {
+        //     if (PlayerUpdateProcessor.DicUpdaters.ContainsKey(UpdaterType))
+        //     {
+        //         return PlayerUpdateProcessor.DicUpdaters[UpdaterType];
+        //     }
+        //     else
+        //     {
+        //         return null;
+        //     }
+        // }
         
         public void InitializeCharacter()
         {
@@ -112,16 +95,16 @@ namespace Player
 
         public void CharacterUpdate()
         {            
-            PlayerUpdateProcessor.RunPlayerUpdate();
+            PlayerUpdateProcessor.RunCharacterUpdate();
         }
 
         public void CharacterFixedUpdate()
         {
-            PlayerUpdateProcessor.RunPlayerFixedUpdate();
+            PlayerUpdateProcessor.RunCharacterFixedUpdate();
         }
         public void CharacterLateUpdate()
         {
-            PlayerUpdateProcessor.RunPlayerLateUpdate();
+            PlayerUpdateProcessor.RunCharacterLateUpdate();
         }        
 
         #region Functions

@@ -1,6 +1,7 @@
 using UnityEngine;
 using Manager;
 using Character.Base;
+using Zombie.Update;
 
 namespace Zombie.Function {
     public class InitZombie : ZombieFunction {
@@ -10,12 +11,12 @@ namespace Zombie.Function {
             ZombieControl.ZombieUpdateProcessor = ZombieControl.GetComponentInChildren<ZombieUpdateProcessor>();
             ZombieControl.ZombieQueryProcessor = ZombieControl.GetComponentInChildren<ZombieQueryProcessor>();                    
 
-            RegisterPlayer(ZombieControl);
+            RegisterZombie(ZombieControl);
             InitCharacterStates(ZombieControl);
         }
 
 
-        void RegisterPlayer(ZombieControl ZombieControl)
+        void RegisterZombie(ZombieControl ZombieControl)
         {
             if (!CharacterManager.Instance.Zombies.Contains(ZombieControl))
             {

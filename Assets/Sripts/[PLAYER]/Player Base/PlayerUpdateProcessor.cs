@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using Character.Base;
 using Character.Base.Update;
 using Enum;
+using System;
 
 namespace Player.Update {
-    public class PlayerUpdateProcessor : MonoBehaviour {
+    public class PlayerUpdateProcessor : CharacterBaseUpdateProcessor {
         public Dictionary<System.Type, PlayerUpdate> DicUpdaters = new Dictionary<System.Type, PlayerUpdate>();        
         public Dictionary<System.Type, CharacterBaseUpdate<ICharacterControl>> DicGlobalUpdaters = new Dictionary<System.Type, CharacterBaseUpdate<ICharacterControl>>();
 
@@ -20,7 +21,8 @@ namespace Player.Update {
 
         private PlayerControl _PlayerControl;
 
-        public void InitUpdaters() {            
+        public override void InitUpdaters()
+        {
             Debug.Log("Loading Default Player Updates : " + control.gameObject.name);
             SetDefaultUpdates();
 
@@ -28,95 +30,103 @@ namespace Player.Update {
                 AddUpdater(typeof(ManualInput));            
         }
 
-        void SetDefaultUpdates() {
+        protected override void SetDefaultUpdates()
+        {
             // AddUpdater(typeof(TargetDistance));
-            
+
             AddGlobalUpdater(typeof(TestGlobalUpdate));
             AddGlobalUpdater(typeof(CollisionSphere));
             AddGlobalUpdater(typeof(BlockingObject));
-
         }
 
-        void AddUpdater(System.Type UpdaterType) {
-            if (UpdaterType.IsSubclassOf(typeof(PlayerUpdate))) {
-                _AddUpdater(UpdaterType);
+        public override void RunCharacterUpdate()
+        {
+            CharacterUpdate(typeof(ManualInput));
+            CharacterUpdate(typeof(BlockingObject));
+            CharacterUpdate(typeof(TestGlobalUpdate));
+        }
+
+        public override void RunCharacterFixedUpdate()
+        {
+            CharacterFixedUpdate(typeof(ManualInput));
+        }
+
+        public override void RunCharacterLateUpdate()
+        {
+            CharacterLateUpdate(typeof(TargetDistance));            
+        }
+
+        protected override void AddUpdater(Type type)
+        {
+            if (type.IsSubclassOf(typeof(PlayerUpdate))) {
+                _AddUpdater(type);
             }
-
         }
 
-        void AddGlobalUpdater(System.Type UpdaterType) {
-            if (UpdaterType.IsSubclassOf(typeof(CharacterBaseUpdate<ICharacterControl>))) {
-                _AddGlobalUpdater(UpdaterType);
+        protected override void AddGlobalUpdater(Type type)
+        {
+            if (type.IsSubclassOf(typeof(CharacterBaseUpdate<ICharacterControl>))) {
+                _AddGlobalUpdater(type);
             }
         }
 
-        void _AddUpdater(System.Type UpdaterType) {
+        protected override void _AddUpdater(Type type)
+        {
             GameObject obj = new GameObject();
-            obj.name = UpdaterType.ToString();
+            obj.name = type.ToString();
             obj.name = obj.name;
             obj.transform.parent = this.transform;
             obj.transform.localPosition = Vector3.zero;
             obj.transform.localRotation = Quaternion.identity;
-            PlayerUpdate u = obj.AddComponent(UpdaterType) as PlayerUpdate;
+            PlayerUpdate u = obj.AddComponent(type) as PlayerUpdate;
             u.PlayerControl = GetComponentInParent<PlayerControl>();
 
-            DicUpdaters.Add(UpdaterType, u);
+            DicUpdaters.Add(type, u);
 
             u.InitComponent();            
         }
 
-        void _AddGlobalUpdater(System.Type UpdaterType) {
+        protected override void _AddGlobalUpdater(Type type)
+        {
             GameObject obj = new GameObject();
-            obj.name = UpdaterType.ToString();
+            obj.name = type.ToString();
             obj.name = obj.name;
             obj.transform.parent = this.transform;
             obj.transform.localPosition = Vector3.zero;
             obj.transform.localRotation = Quaternion.identity;
-            CharacterBaseUpdate<ICharacterControl> u = obj.AddComponent(UpdaterType) as CharacterBaseUpdate<ICharacterControl>;
+            CharacterBaseUpdate<ICharacterControl> u = obj.AddComponent(type) as CharacterBaseUpdate<ICharacterControl>;
             u.CharacterControl = GetComponentInParent<PlayerControl>();
 
-            DicGlobalUpdaters.Add(UpdaterType, u);
+            DicGlobalUpdaters.Add(type, u);
 
             u.InitComponent();            
         }
 
-        public void RunPlayerFixedUpdate() {
-            PlayerFixedUpdate(typeof(BlockingObject));
-            PlayerFixedUpdate(typeof(ManualInput));
+        protected override void CharacterUpdate(Type type)
+        {
+            if (control.PlayerUpdateProcessor.DicUpdaters.ContainsKey(type))
+                control.PlayerUpdateProcessor.DicUpdaters[type].OnUpdate();            
+
+            if (control.PlayerUpdateProcessor.DicGlobalUpdaters.ContainsKey(type))
+                control.PlayerUpdateProcessor.DicGlobalUpdaters[type].OnUpdate();
         }
 
-        public void RunPlayerUpdate() {
-            PlayerUpdate(typeof(ManualInput));
+        protected override void CharacterFixedUpdate(Type type)
+        {
+            if (control.PlayerUpdateProcessor.DicUpdaters.ContainsKey(type))            
+                control.PlayerUpdateProcessor.DicUpdaters[type].OnFixedUpdate();            
 
-            PlayerUpdate(typeof(TestGlobalUpdate));
+            if (control.PlayerUpdateProcessor.DicGlobalUpdaters.ContainsKey(type))            
+                control.PlayerUpdateProcessor.DicGlobalUpdaters[type].OnFixedUpdate(); 
         }
 
-        public void RunPlayerLateUpdate() {
-            PlayerLateUpdate(typeof(TargetDistance));
-        }
+        protected override void CharacterLateUpdate(Type type)
+        {
+            if (control.PlayerUpdateProcessor.DicUpdaters.ContainsKey(type))            
+                control.PlayerUpdateProcessor.DicUpdaters[type].OnLateUpdate();        
 
-        void PlayerUpdate(System.Type UpdaterType) {            
-            if (control.PlayerUpdateProcessor.DicUpdaters.ContainsKey(UpdaterType))
-                control.PlayerUpdateProcessor.DicUpdaters[UpdaterType].OnUpdate();            
-            
-            if (control.PlayerUpdateProcessor.DicGlobalUpdaters.ContainsKey(UpdaterType))
-                control.PlayerUpdateProcessor.DicGlobalUpdaters[UpdaterType].OnUpdate();
-        }
-
-        void PlayerFixedUpdate(System.Type UpdaterType) {
-            if (control.PlayerUpdateProcessor.DicUpdaters.ContainsKey(UpdaterType))            
-                control.PlayerUpdateProcessor.DicUpdaters[UpdaterType].OnFixedUpdate();            
-            
-            if (control.PlayerUpdateProcessor.DicGlobalUpdaters.ContainsKey(UpdaterType))            
-                control.PlayerUpdateProcessor.DicGlobalUpdaters[UpdaterType].OnFixedUpdate(); 
-        }
-
-        void PlayerLateUpdate(System.Type UpdaterType) {
-            if (control.PlayerUpdateProcessor.DicUpdaters.ContainsKey(UpdaterType))            
-                control.PlayerUpdateProcessor.DicUpdaters[UpdaterType].OnLateUpdate();        
-
-            if (control.PlayerUpdateProcessor.DicGlobalUpdaters.ContainsKey(UpdaterType))            
-                control.PlayerUpdateProcessor.DicGlobalUpdaters[UpdaterType].OnLateUpdate();        
-        }
+            if (control.PlayerUpdateProcessor.DicGlobalUpdaters.ContainsKey(type))            
+                control.PlayerUpdateProcessor.DicGlobalUpdaters[type].OnLateUpdate();  
+        } 
     }
 }

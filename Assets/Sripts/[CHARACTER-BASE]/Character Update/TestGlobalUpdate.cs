@@ -7,7 +7,7 @@ namespace Character.Base.Update {
         }
         public override void OnUpdate() {
             // Debug.Log("test global update");
-            // Debug.Log(CharacterControl.transform.position);
+            // Debug.Log(CharacterControl.transform.name);
         }
     }    
 }
