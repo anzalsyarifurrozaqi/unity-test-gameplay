@@ -31,17 +31,22 @@ namespace Zombie.Update {
             AddGlobalUpdater(typeof(TestGlobalUpdate));
             AddGlobalUpdater(typeof(CollisionSphere));
             AddGlobalUpdater(typeof(BlockingObject));
+
+            // local updater
+            AddUpdater(typeof(ZombieMove));
         }
 
         public override void RunCharacterUpdate()
         {
             CharacterUpdate(typeof(BlockingObject));
             CharacterUpdate(typeof(TestGlobalUpdate));
+
+            CharacterUpdate(typeof(ZombieMove));
         }
 
         public override void RunCharacterFixedUpdate()
         {
-            
+            CharacterFixedUpdate(typeof(ZombieMove));
         }
 
         public override void RunCharacterLateUpdate()

@@ -7,6 +7,10 @@ using Zombie.Dataset;
 
 namespace Zombie {
     public class ZombieControl : MonoBehaviour, ICharacterControl {
+        [Header("Input")]
+        public Vector2 Move;
+        public Vector2 MOVE => Move;
+        
         [Header("SubComponens")]
         public ZombieSetup ZombieSetup;
         public ZombieFunctionProcessor ZombieFunctionProcessor;
@@ -54,7 +58,6 @@ namespace Zombie {
         }
         private Animator _animator;
 
-        public Vector2 MOVE => throw new System.NotImplementedException();
 
         public void InitializeCharacter() {
             RunFunction(typeof(InitZombie), this);
