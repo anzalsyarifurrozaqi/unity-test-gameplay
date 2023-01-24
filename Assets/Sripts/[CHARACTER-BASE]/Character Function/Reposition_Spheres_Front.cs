@@ -2,8 +2,7 @@ using UnityEngine;
 
 namespace Character.Base.Function {
     public class Reposition_Spheres_Front : CharacterBaseFunction<ICharacterControl> {    
-        public override void RunGlobalFunction() {            
-            Debug.Log("reposition " + CharacterControl.transform.name);
+        public override void RunGlobalFunction() {                        
             CollisionSpheresData collisionSpheresData = CharacterControl.DATASET.COLLISION_SPHERES_DATA;
             BoxCollider boxCollider = CharacterControl.BOX_COLLIDER;
             Vector3 PlayerPosition = CharacterControl.transform.position;

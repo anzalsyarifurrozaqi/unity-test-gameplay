@@ -1,6 +1,6 @@
 using UnityEngine;
 using Enum;
-using Manager.Attack;
+using AttackManager;
 
 namespace Player
 {
