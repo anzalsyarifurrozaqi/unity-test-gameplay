@@ -1,5 +1,4 @@
 using UnityEngine;
-using Player;
 using Character.Base;
 
 namespace Ablilities {
