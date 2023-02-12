@@ -123,6 +123,43 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!84 &81794493
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: WaterDepthMap
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 5
+  m_Width: 1024
+  m_Height: 1024
+  m_AntiAliasing: 1
+  m_MipCount: -1
+  m_DepthStencilFormat: 94
+  m_ColorFormat: 0
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_EnableCompatibleFormat: 1
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 0
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
+  m_ShadowSamplingMode: 2
 --- !u!1 &600934141
 GameObject:
   m_ObjectHideFlags: 0
@@ -863,10 +900,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23d47ed9488a159468b9b5d26ba8dd25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _depthTex: {fileID: 0}
+  _depthTex: {fileID: 81794493}
   bakedDepthTex: {fileID: 0}
+  _waves:
+  - amplitude: 0.701152
+    direction: 106.22566
+    wavelength: 2.7429316
+    origin:
+      x: 0
+      y: 0
+    onmiDir: 0
+  - amplitude: 1.1880069
+    direction: 23.92044
+    wavelength: 3.2668126
+    origin:
+      x: 0
+      y: 0
+    onmiDir: 0
+  - amplitude: 1.005508
+    direction: 103.05429
+    wavelength: 3.0453277
+    origin:
+      x: 0
+      y: 0
+    onmiDir: 0
+  - amplitude: 1.548553
+    direction: 67.21166
+    wavelength: 5.147145
+    origin:
+      x: 0
+      y: 0
+    onmiDir: 0
+  - amplitude: 1.5568295
+    direction: 18.688784
+    wavelength: 7.8800645
+    origin:
+      x: 0
+      y: 0
+    onmiDir: 0
+  - amplitude: 1.8099016
+    direction: -16.49971
+    wavelength: 7.121061
+    origin:
+      x: 0
+      y: 0
+    onmiDir: 0
   settingsData: {fileID: 0}
-  surfaceData: {fileID: 0}
+  surfaceData: {fileID: 11400000, guid: a8883711de4608144aeb29869c40658a, type: 2}
   resources: {fileID: 11400000, guid: 003c6be49d24160478af8d006d8e8ba2, type: 2}
 --- !u!4 &2117037269
 Transform:
