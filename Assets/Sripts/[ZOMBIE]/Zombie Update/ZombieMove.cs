@@ -47,8 +47,7 @@ namespace Zombie.Update {
                 yield return new WaitForEndOfFrame();
                 yield return new WaitForSeconds(7f);
 
-                RandomizeMovePointObject(ref _moveDirection);
-                Debug.Log(_moveDirection);
+                RandomizeMovePointObject(ref _moveDirection);                
             }
         }
     }

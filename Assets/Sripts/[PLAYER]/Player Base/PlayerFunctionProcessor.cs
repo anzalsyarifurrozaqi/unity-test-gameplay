@@ -33,6 +33,8 @@ namespace Player.Function
             // AddFunction(typeof(SetTransform));
             AddFunction(                                    typeof(Look));
             AddFunction(                                    typeof(ShotDirection));           
+            AddFunction(                                    typeof(PlayerMovement));
+            AddFunction(                                    typeof(PlayerShootMovement));
             
              
             AddGlobalFunction(                              typeof(TestGlobalFunction));            

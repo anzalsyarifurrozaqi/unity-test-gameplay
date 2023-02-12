@@ -140,6 +140,14 @@ namespace Player
         public void RunFunction(System.Type FunctionType, Vector3 value, Quaternion value2) {
             PlayerFunctionProcessor.DicFunctions[FunctionType].RunFunction(value, value2);
         }
+
+        public void RunFunction(System.Type FunctionType, Vector3 value, ref Quaternion value2) {
+            PlayerFunctionProcessor.DicFunctions[FunctionType].RunFunction(value, ref value2);
+        }
+
+        public void RunFunction(System.Type FunctionType, Transform value, bool value2, ref Quaternion value3) {
+            PlayerFunctionProcessor.DicFunctions[FunctionType].RunFunction(value, value2, ref value3);
+        }
         #endregion
 
         #region Queries
