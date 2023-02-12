@@ -1,37 +1,33 @@
 using UnityEngine;
-using Character;
-using Character.Update;
+using Player;
+using Player.Update;
+using Zombie;
 using System.Collections.Generic;
 
-namespace Manager
-{
-    public class CharacterManager : Singleton<CharacterManager>
-    {
-        public List<CharacterControl> Characters = new List<CharacterControl>();        
+namespace Manager {
+    public class CharacterManager : Singleton<CharacterManager> {
+        public List<PlayerControl> Players = new List<PlayerControl>();
+        public List<ZombieControl> Zombies = new List<ZombieControl>();
 
         [SerializeField]
-        CharacterControl[] ArrCharacters = null;
+        PlayerControl[] ArrPlayers = null;
+        [SerializeField]
+        ZombieControl[] ArrZombies = null;
 
         #region PULBIC METHOD
-        public CharacterControl GetCharacter(GameObject obj)
-        {
-            for (int i = 0; i < ArrCharacters.Length; i++)
-            {
-                if (ArrCharacters[i].gameObject == obj)
-                {
-                    return ArrCharacters[i];
+        public PlayerControl GetPlayer(GameObject obj) {
+            for (int i = 0; i < ArrPlayers.Length; ++i) {
+                if (ArrPlayers[i].gameObject == obj) {
+                    return ArrPlayers[i];
                 }
             }
 
             return null;
         }
 
-        public CharacterControl GetPlayableCharacter()
-        {
-            foreach (CharacterControl control in Characters)
-            {
-                if (control.characterUpdateProcessor.DicUpdaters.ContainsKey(typeof(ManualInput)))
-                {
+        public PlayerControl GetPlayablePlayer() {
+            foreach (PlayerControl control in Players) {
+                if (control.PlayerUpdateProcessor.DicUpdaters.ContainsKey(typeof(ManualInput))) {
                     return control;
                 }
             }
@@ -39,14 +35,10 @@ namespace Manager
             return null;
         }
 
-        public bool IsCharacterPlayable(GameObject characterObj)
-        {
-            foreach (CharacterControl control in Characters)
-            {
-                if (control.gameObject == characterObj)
-                {
-                    if (control.characterUpdateProcessor.DicUpdaters.ContainsKey(typeof(ManualInput)))
-                    {
+        public bool IsPlayerPlayable(GameObject PlayerObj) {
+            foreach (PlayerControl control in Players) {
+                if (control.gameObject == PlayerObj) {
+                    if (control.PlayerUpdateProcessor.DicUpdaters.ContainsKey(typeof(ManualInput))) {
                         return true;
                     }
                 }
@@ -60,56 +52,78 @@ namespace Manager
         private void Awake() {
             
         }
-        private void Update()
-        {
-            InitCharacterArray();
+        private void Update() {
+            InitPlayerArray();
 
-            for (int i = 0; i < ArrCharacters.Length; i++)
-            {
-                ArrCharacters[i].CharacterUpdate();
+            for (int i = 0; i < ArrPlayers.Length; ++i) {
+                ArrPlayers[i].CharacterUpdate();
+            }
+
+            InitZombieArray();
+
+            for (int i = 0; i < ArrZombies.Length; ++i) {
+                ArrZombies[i].CharacterUpdate();
             }
         }
 
-        private void FixedUpdate()
-        {
-            InitCharacterArray();
+        private void FixedUpdate() {
+            InitPlayerArray();
 
-            for (int i = 0; i < ArrCharacters.Length; i++)
-            {
-                ArrCharacters[i].CharacterFixedUpdate();
+            for (int i = 0; i < ArrPlayers.Length; ++i) {
+                ArrPlayers[i].CharacterFixedUpdate();
+            }
+
+            InitZombieArray();
+
+            for (int i = 0; i < ArrZombies.Length; ++i) {
+                ArrZombies[i].CharacterFixedUpdate();
             }
         }
 
-        private void LateUpdate()
-        {
-            InitCharacterArray();
+        private void LateUpdate() {
+            InitPlayerArray();
 
-            for (int i = 0; i < ArrCharacters.Length; i++)
-            {
-                ArrCharacters[i].CharacterLateUpdate();
+            for (int i = 0; i < ArrPlayers.Length; ++i) {
+                ArrPlayers[i].CharacterLateUpdate();
+            }
+
+            InitZombieArray();
+
+            for (int i = 0; i < ArrZombies.Length; ++i) {
+                ArrZombies[i].CharacterLateUpdate();
             }
         }
 
         private void OnAnimatorMove() {
-            InitCharacterArray();
+            // InitPlayerArray();
 
-            for (int i = 0; i < ArrCharacters.Length; i++) {
-                // ArrCharacters[i].CharacterIbAnimatorMove();
-            }
+            // for (int i = 0; i < ArrPlayers.Length; i++) {
+            //     // ArrPlayers[i].PlayerIbAnimatorMove();
+            // }
         }
 
         #endregion
 
         #region UTIL METHOD
-        void InitCharacterArray()
+        void InitPlayerArray()
         {            
-            if (ArrCharacters == null || ArrCharacters.Length != Characters.Count)
+            if (ArrPlayers == null || ArrPlayers.Length != Players.Count)
             {
-                ArrCharacters = new CharacterControl[Characters.Count];
+                ArrPlayers = new PlayerControl[Players.Count];
 
-                for (int i = 0; i < Characters.Count; i++)
+                for (int i = 0; i < Players.Count; i++)
                 {
-                    ArrCharacters[i] = Characters[i];
+                    ArrPlayers[i] = Players[i];
+                }
+            }
+        }
+
+        void InitZombieArray() {
+            if (ArrZombies == null || ArrZombies.Length != Zombies.Count) {
+                ArrZombies = new ZombieControl[Zombies.Count];
+
+                for (int i = 0; i < Zombies.Count; ++i) {
+                    ArrZombies[i] = Zombies[i];
                 }
             }
         }

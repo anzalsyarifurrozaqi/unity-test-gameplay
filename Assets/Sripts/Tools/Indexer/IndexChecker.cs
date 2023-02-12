@@ -1,9 +1,10 @@
 using System.Collections.Generic;
-using Character;
+using Player;
 using Enum;
+using Character.Base;
 
 public class IndexChecker {
-    public static bool MakeTransition(CharacterControl control, List<TransitionConditionType> transitionConditions) {
+    public static bool MakeTransition(ICharacterControl control, List<TransitionConditionType> transitionConditions) {
         foreach (TransitionConditionType c in transitionConditions) {
             CheckConditionBase check = GetConditionChecker.GET(c);
 
@@ -15,7 +16,7 @@ public class IndexChecker {
         return true;
     }
 
-    public static bool NotCondition(CharacterControl control, List<TransitionConditionType> transitionConditions) {
+    public static bool NotCondition(ICharacterControl control, List<TransitionConditionType> transitionConditions) {
         foreach (TransitionConditionType c in transitionConditions) {
             CheckConditionBase check = GetConditionChecker.GET(c);
 
