@@ -166,7 +166,7 @@ namespace WaterSystem {
         }
 
         void LateUpdate() {
-            GerstnerWaveJobs.UpdateHeight();
+            GerstnerWaveJobs.UpdateHeights();
         }   
 
         public void FragWaveNormals(bool toggle) {
