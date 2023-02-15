@@ -15,7 +15,7 @@ MonoBehaviour:
   defaultFoamRamp: {fileID: 2800000, guid: 4098762bce32f44b9b7c56531d1a988e, type: 3}
   defaultFoamMap: {fileID: 2800000, guid: ca439406e806ecf44a9586510be9477d, type: 3}
   defaultSurfaceMap: {fileID: 2800000, guid: f395b7d64f44848c6a3cba1f1173fe90, type: 3}
-  defaultSeaMaterial: {fileID: 2100000, guid: a1a9c7412ca3be5479df5cb5e92aa4c9, type: 2}
+  defaultSeaMaterial: {fileID: 2100000, guid: 27ba16b2b1f0ab94baf7942886716f39, type: 2}
   defaultWaterMeshes:
   - {fileID: -640940419538675234, guid: 9fafded76e2c32a45b1112841a15ca4f, type: 3}
   - {fileID: 8920088001204031672, guid: 9fafded76e2c32a45b1112841a15ca4f, type: 3}
