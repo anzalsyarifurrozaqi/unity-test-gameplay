@@ -606,6 +606,43 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!84 &1172998687
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: WaterDepthMap
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 5
+  m_Width: 1024
+  m_Height: 1024
+  m_AntiAliasing: 1
+  m_MipCount: -1
+  m_DepthStencilFormat: 94
+  m_ColorFormat: 0
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_EnableCompatibleFormat: 1
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
+  m_ShadowSamplingMode: 2
 --- !u!1 &1258966105
 GameObject:
   m_ObjectHideFlags: 0
@@ -684,8 +721,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1258966105}
-  m_LocalRotation: {x: -0.20672473, y: -0.7932124, z: 0.40933907, w: -0.40065026}
-  m_LocalPosition: {x: -7.432722, y: 11.469791, z: 5.480045}
+  m_LocalRotation: {x: 0.51232904, y: -0.15781133, z: 0.09640744, w: 0.8386418}
+  m_LocalPosition: {x: 4.0638437, y: 20.273779, z: -10.415688}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -931,43 +968,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!84 &1877864650
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: WaterDepthMap
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 5
-  m_Width: 1024
-  m_Height: 1024
-  m_AntiAliasing: 1
-  m_MipCount: -1
-  m_DepthStencilFormat: 94
-  m_ColorFormat: 0
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_EnableCompatibleFormat: 1
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
-  m_ShadowSamplingMode: 2
 --- !u!1 &2117037267
 GameObject:
   m_ObjectHideFlags: 0
@@ -998,52 +998,52 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   computeOverride: 0
-  _depthTex: {fileID: 1877864650}
+  _depthTex: {fileID: 1172998687}
   bakedDepthTex: {fileID: 0}
   _waves:
-  - amplitude: 0.701152
-    direction: 106.22566
-    wavelength: 2.7429316
+  - amplitude: 0.3589886
+    direction: -86.00679
+    wavelength: 2.575192
     origin:
       x: 0
       y: 0
     omniDir: 0
-  - amplitude: 1.1880069
-    direction: 23.92044
-    wavelength: 3.2668126
+  - amplitude: 0.56380135
+    direction: -85.1302
+    wavelength: 4.6078534
     origin:
       x: 0
       y: 0
     omniDir: 0
-  - amplitude: 1.005508
-    direction: 103.05429
-    wavelength: 3.0453277
+  - amplitude: 0.74456567
+    direction: -14.220657
+    wavelength: 4.9995146
     origin:
       x: 0
       y: 0
     omniDir: 0
-  - amplitude: 1.548553
-    direction: 67.21166
-    wavelength: 5.147145
+  - amplitude: 0.78127056
+    direction: -45.94812
+    wavelength: 5.272367
     origin:
       x: 0
       y: 0
     omniDir: 0
-  - amplitude: 1.5568295
-    direction: 18.688784
-    wavelength: 7.8800645
+  - amplitude: 1.083595
+    direction: -50.457794
+    wavelength: 4.602287
     origin:
       x: 0
       y: 0
     omniDir: 0
-  - amplitude: 1.8099016
-    direction: -16.49971
-    wavelength: 7.121061
+  - amplitude: 0.87634593
+    direction: -48.53418
+    wavelength: 8.344253
     origin:
       x: 0
       y: 0
     omniDir: 0
-  settingsData: {fileID: 0}
+  settingsData: {fileID: 11400000, guid: 23826a1f8673e704fb80ac642ee2133b, type: 2}
   surfaceData: {fileID: 11400000, guid: a8883711de4608144aeb29869c40658a, type: 2}
   resources: {fileID: 11400000, guid: 003c6be49d24160478af8d006d8e8ba2, type: 2}
 --- !u!4 &2117037269

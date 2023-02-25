@@ -72,7 +72,7 @@ namespace WaterSystem {
             RenderPipelineManager.beginCameraRendering += BeginCameraRendering;
 
             if (resources == null) {                
-                resources = Resources.Load("WaterResources") as WaterResources;
+                resources = Resources.Load("WaterResources") as WaterResources;                
             }
         }
 
@@ -145,6 +145,10 @@ namespace WaterSystem {
         }
 
         public void Init() {
+            if (resources == null) {
+                resources = Resources.Load("WaterResources") as WaterResources;                
+            }
+
             SetWaves();
             GenerateColorRamp();
 
@@ -154,9 +158,7 @@ namespace WaterSystem {
 
             // TODO: planar reflection
 
-            if (resources = null) {
-                resources = Resources.Load("WaterResources") as WaterResources;                
-            }
+            
 
             if (Application.platform != RuntimePlatform.WebGLPlayer) {
                 CaptureDepthMap();
@@ -179,7 +181,7 @@ namespace WaterSystem {
          
          private void SetWaves() {
             SetupWaves(surfaceData._customWaves);
-
+            
             // Set default resource
             Shader.SetGlobalTexture(FoamMap, resources.defaultFoamMap);
             Shader.SetGlobalTexture(SurfaceMap, resources.defaultSurfaceMap);
