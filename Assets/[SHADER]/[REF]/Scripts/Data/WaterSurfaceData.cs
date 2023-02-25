@@ -8,14 +8,14 @@ namespace WaterSystem.Data {
     // </summary>
     [System.Serializable][CreateAssetMenu(fileName = "WaterSurfaceData", menuName = "WaterSystem/Surface Data", order = 0)]
     public class WaterSurfaceData : ScriptableObject {
-        public float _waterMacVisibility = 40.0f;
+        public float _waterMaxVisibility = 40.0f;
         public Gradient _absorptionRamp;
         public Gradient _scatterRamp;
         public List<Wave> _waves = new List<Wave>();
         public bool _customWaves = false;
         public int randomSeed = 3234;
         public BasicWaves _basicWaveSettings = new BasicWaves(1.5f, 45.0f, 5.0f);
-        public FoamSettings _foamSetting = new FoamSettings();
+        public FoamSettings _foamSettings = new FoamSettings();
         [SerializeField]
         public bool _init = false;
     }
@@ -26,14 +26,14 @@ namespace WaterSystem.Data {
         public float direction; // direction the wave travels in degrees from Z+
         public float wavelength; // distance between crest>crest
         public float2 origin; // Omi directional point of origin
-        public float onmiDir; // Is omni?
+        public float omniDir; // Is omni?
 
         public Wave(float amp, float dir, float length, float2 org, bool omni) {
             amplitude = amp;
             direction = dir;
             wavelength = length;
             origin = org;
-            onmiDir = omni ? 1 : 0;
+            omniDir = omni ? 1 : 0;
         }
     }
 

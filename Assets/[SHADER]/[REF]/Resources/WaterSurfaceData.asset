@@ -12,22 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07c7e74650c191743a4f0dbd549213e8, type: 3}
   m_Name: WaterSurfaceData
   m_EditorClassIdentifier: 
-  _waterMacVisibility: 40
+  _waterMaxVisibility: 40
   _absorptionRamp:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
-    key1: {r: 1, g: 1, b: 1, a: 1}
-    key2: {r: 0, g: 0, b: 0, a: 0}
-    key3: {r: 0, g: 0, b: 0, a: 0}
+    key1: {r: 0.22, g: 0.87, b: 0.87, a: 1}
+    key2: {r: 0, g: 0.47, b: 0.49, a: 0}
+    key3: {r: 0, g: 0.275, b: 0.44, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 0
-    ctime1: 65535
-    ctime2: 0
-    ctime3: 0
-    ctime4: 0
+    ctime1: 5374
+    ctime2: 20840
+    ctime3: 43581
+    ctime4: 65535
     ctime5: 0
     ctime6: 0
     ctime7: 0
@@ -40,22 +40,22 @@ MonoBehaviour:
     atime6: 0
     atime7: 0
     m_Mode: 0
-    m_NumColorKeys: 2
+    m_NumColorKeys: 5
     m_NumAlphaKeys: 2
   _scatterRamp:
     serializedVersion: 2
-    key0: {r: 1, g: 1, b: 1, a: 1}
-    key1: {r: 1, g: 1, b: 1, a: 1}
-    key2: {r: 0, g: 0, b: 0, a: 0}
-    key3: {r: 0, g: 0, b: 0, a: 0}
+    key0: {r: 0, g: 0, b: 0, a: 1}
+    key1: {r: 0.08, g: 0.41, b: 0.34, a: 1}
+    key2: {r: 0.13, g: 0.55, b: 0.45, a: 0}
+    key3: {r: 0.21, g: 0.62, b: 0.6, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 0
-    ctime1: 65535
-    ctime2: 0
-    ctime3: 0
+    ctime1: 9830
+    ctime2: 27525
+    ctime3: 65535
     ctime4: 0
     ctime5: 0
     ctime6: 0
@@ -69,9 +69,23 @@ MonoBehaviour:
     atime6: 0
     atime7: 0
     m_Mode: 0
-    m_NumColorKeys: 2
+    m_NumColorKeys: 4
     m_NumAlphaKeys: 2
-  _waves: []
+  _waves:
+  - amplitude: 0.83395374
+    direction: -116.67923
+    wavelength: 3.4913454
+    origin:
+      x: 0
+      y: 0
+    omniDir: 0
+  - amplitude: 12.3
+    direction: -93.77127
+    wavelength: 83
+    origin:
+      x: 0
+      y: 0
+    omniDir: 0
   _customWaves: 0
   randomSeed: 3234
   _basicWaveSettings:
@@ -79,8 +93,8 @@ MonoBehaviour:
     amplitude: 1.5
     direction: 45
     wavelength: 5
-  _foamSetting:
-    foamType: 0
+  _foamSettings:
+    foamType: 1
     basicFoam:
       serializedVersion: 2
       m_Curve:
@@ -94,8 +108,8 @@ MonoBehaviour:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 1
-        value: 1
+        time: 0.96250004
+        value: 0.09433961
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -195,4 +209,4 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  _init: 0
+  _init: 1

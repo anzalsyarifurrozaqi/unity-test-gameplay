@@ -157,13 +157,13 @@ namespace WaterSystem {
                     var windDir = new float2(0f, 0f);
 
                     direction = math.radians(direction); // Convert the incoming degrees to radians
-                    var windDirInput = new float2(math.sin(direction), math.cos(direction)) * (1 - WaveData[wave].onmiDir);// Calculate wind direction
-                    var windOmniInput = (pos - omniPos) * WaveData[wave].onmiDir;
+                    var windDirInput = new float2(math.sin(direction), math.cos(direction)) * (1 - WaveData[wave].omniDir);// Calculate wind direction
+                    var windOmniInput = (pos - omniPos) * WaveData[wave].omniDir;
 
                     windDir += windDirInput;
                     windDir += windOmniInput;
                     windDir = math.normalize(windDir);
-                    var dir = math.dot(windDir, pos - (omniPos * WaveData[wave].onmiDir));
+                    var dir = math.dot(windDir, pos - (omniPos * WaveData[wave].omniDir));
 
                     /////////////////////////////////////////Position output calculations/////////////////////////////
                     var calc = dir * w + -Time * wSpeed; // the wave calculation

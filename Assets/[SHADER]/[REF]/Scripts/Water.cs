@@ -25,7 +25,7 @@ namespace WaterSystem {
         private PlanarReflections _planarReflections;
 
         private bool _useComputeBuffer;
-        private bool computeOverride;
+        public bool computeOverride;
 
         [SerializeField] RenderTexture _depthTex;
         public Texture bakedDepthTex;
@@ -52,8 +52,7 @@ namespace WaterSystem {
         private static readonly int WaveHeight = Shader.PropertyToID("_WaveHeight");
         private static readonly int MaxWaveHeight = Shader.PropertyToID("_MaxWaveHeight");
         private static readonly int MaxDepth = Shader.PropertyToID("_MaxDepth");
-        private static readonly int WaveCount = Shader.PropertyToID("_WaveCount");
-        private static readonly int CubemapTexture = Shader.PropertyToID("_CubemapTexture");
+        private static readonly int WaveCount = Shader.PropertyToID("_WaveCount");        
         private static readonly int WaveDataBuffer = Shader.PropertyToID("_WaveDataBuffer");
         private static readonly int WaveData = Shader.PropertyToID("_WaveData");
         private static readonly int AbsorptionScatteringRamp = Shader.PropertyToID("_AbsorptionScatteringRamp");
@@ -156,8 +155,7 @@ namespace WaterSystem {
             // TODO: planar reflection
 
             if (resources = null) {
-                resources = Resources.Load("WaterResources") as WaterResources;
-                Debug.Log(resources);
+                resources = Resources.Load("WaterResources") as WaterResources;                
             }
 
             if (Application.platform != RuntimePlatform.WebGLPlayer) {
@@ -197,7 +195,7 @@ namespace WaterSystem {
 
             Shader.SetGlobalFloat(WaveHeight, _waveHeight);
             Shader.SetGlobalFloat(MaxWaveHeight, _maxWaveHeight);
-            Shader.SetGlobalFloat(MaxDepth, surfaceData._waterMacVisibility);
+            Shader.SetGlobalFloat(MaxDepth, surfaceData._waterMaxVisibility);
 
             // TODO:settings Data refftype
 
@@ -225,7 +223,7 @@ namespace WaterSystem {
          private Vector4[] GetWaveData() {
             var waveData = new Vector4[20];
             for (var i = 0; i < _waves.Length; i++) {
-                waveData[i] = new Vector4(_waves[i].amplitude, _waves[i].direction, _waves[i].wavelength, _waves[i].onmiDir);
+                waveData[i] = new Vector4(_waves[i].amplitude, _waves[i].direction, _waves[i].wavelength, _waves[i].omniDir);
                 waveData[i+10] = new Vector4(_waves[i].origin.x, _waves[i].origin.y, 0, 0) ;
             }
             return waveData;
@@ -277,12 +275,12 @@ namespace WaterSystem {
             }
 
             for (var i = 0; i < 128; i++) {
-                switch(surfaceData._foamSetting.foamType) {
+                switch(surfaceData._foamSettings.foamType) {
                     case 0: // default
                         cols[i + 256] = defaultFoamMap.GetPixelBilinear(i / 128f, 0.5f);
                         break;
                     case 1: // simple
-                        cols[i + 256] = defaultFoamMap.GetPixelBilinear(surfaceData._foamSetting.basicFoam.Evaluate(i / 128f), 0.5f);
+                        cols[i + 256] = defaultFoamMap.GetPixelBilinear(surfaceData._foamSettings.basicFoam.Evaluate(i / 128f), 0.5f);
                         break;
                     case 2: // custom
                         cols[i + 256] = Color.black;
@@ -320,7 +318,7 @@ namespace WaterSystem {
             _depthCam.orthographic = true;
             _depthCam.orthographicSize = 250; // harcoded = 1k area - TODO
             _depthCam.nearClipPlane = 0.01f;
-            _depthCam.farClipPlane = surfaceData._waterMacVisibility + depthExtra;
+            _depthCam.farClipPlane = surfaceData._waterMaxVisibility + depthExtra;
             _depthCam.allowHDR = false;
             _depthCam.allowMSAA = false;
             _depthCam.cullingMask = (1 << 10);
