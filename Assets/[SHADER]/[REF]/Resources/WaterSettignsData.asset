@@ -12,5 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 403502def70cf7541a4d985b0667e29e, type: 3}
   m_Name: WaterSettignsData
   m_EditorClassIdentifier: 
-  waterGeomType: 1
-  refType: 2
+  planarSettings:
+    m_ResolutionMultiplier: 1
+    m_ClipPlaneOffset: 0.24
+    m_ReflectLayers:
+      serializedVersion: 2
+      m_Bits: 4294967295
+    m_Shadows: 0

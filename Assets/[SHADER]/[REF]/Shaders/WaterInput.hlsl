@@ -15,12 +15,9 @@ float4x4 _InvViewProjection;
 
 // Screen Effects Textures
 SAMPLER(sampler_ScreenTextures_linear_clamp);
-#if defined(_REFLECTION_PLANERREFLECTION)
 TEXTURE2D(_PlanarReflectionTexture);
-#elif defined(_RELFECTION_CUBEMAP)
 TEXTURECUBE(_CubemapTexture);
 SAMPLER(sampler_CubemapTexture);
-#endif
 TEXTURE2D(_WaterFXMap);
 TEXTURE2D(_CameraDepthTexture);
 TEXTURE2D(_CameraOpaqueTexture); SAMPLER(sampler_cameraOpaqueTexture_linear_clamp);

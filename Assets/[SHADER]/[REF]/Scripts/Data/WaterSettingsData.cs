@@ -7,20 +7,9 @@ namespace WaterSystem.Data {
     // </summary>
     [System.Serializable][CreateAssetMenu(fileName = "WaterSettignsData", menuName = "WaterSystem/Settings", order =0)]
     public class WaterSettingsData : ScriptableObject {
-        public GeometryType waterGeomType; // The type of geometry, either vertex offset or tesselation
-        public ReflectionType refType = ReflectionType.PlanarReflection; // How teh reflections are generated
-        
-    }
-
-    /// <summary>
-    /// The type of reflection source, custom cubemap, closest reflection probe, planan reflection
-    /// </summary>
-    [System.Serializable]
-    public enum ReflectionType {
-        Cubemap,
-        ReflectionProbe,
-        PlanarReflection
-    }
+        // public GeometryType waterGeomType; // The type of geometry, either vertex offset or tesselation        
+        public PlanarReflections.PlanarReflectionSettings planarSettings; // Planar reflection settings
+    }    
 
     /// <summary>
     /// The type of geometry, either vertex offset or tessellation

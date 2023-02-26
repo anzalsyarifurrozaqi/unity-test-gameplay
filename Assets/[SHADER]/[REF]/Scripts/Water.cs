@@ -156,9 +156,13 @@ namespace WaterSystem {
                 Shader.SetGlobalTexture(WaterDepthMap, bakedDepthTex);
             }
 
-            // TODO: planar reflection
+            if (!gameObject.TryGetComponent(out _planarReflections)) {                
+                _planarReflections = gameObject.AddComponent<PlanarReflections>();
+            }
 
-            
+            _planarReflections.hideFlags = HideFlags.HideAndDontSave | HideFlags.HideInInspector;
+            _planarReflections.m_settings = settingsData.planarSettings;
+            _planarReflections.enabled = true;
 
             if (Application.platform != RuntimePlatform.WebGLPlayer) {
                 CaptureDepthMap();
@@ -225,8 +229,7 @@ namespace WaterSystem {
          private Vector4[] GetWaveData() {
             var waveData = new Vector4[20];
             for (var i = 0; i < _waves.Length; i++) {
-                waveData[i] = new Vector4(_waves[i].amplitude, _waves[i].direction, _waves[i].wavelength, _waves[i].omniDir);
-                waveData[i+10] = new Vector4(_waves[i].origin.x, _waves[i].origin.y, 0, 0) ;
+                waveData[i] = new Vector4(_waves[i].amplitude, _waves[i].direction, _waves[i].wavelength);                
             }
             return waveData;
          }
@@ -249,7 +252,7 @@ namespace WaterSystem {
                     var amp = a * p * Random.Range(0.8f, 1.2f);
                     var dir = d + Random.Range(-90f, 90f);
                     var len = l * p * Random.Range(0.6f, 1.4f);
-                    _waves[i] = new Wave(amp, dir, len, Vector2.zero, false);
+                    _waves[i] = new Wave(amp, dir, len, Vector2.zero);
                     Random.InitState(surfaceData.randomSeed + i + 1);
                 }
                 Random.state = backupSeed;

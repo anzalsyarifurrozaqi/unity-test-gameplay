@@ -146,8 +146,7 @@ namespace WaterSystem {
 
                     var amplitude = WaveData[wave].amplitude;
                     var direction = WaveData[wave].direction;
-                    var wavelength = WaveData[wave].wavelength;
-                    var omniPos = WaveData[wave].origin;
+                    var wavelength = WaveData[wave].wavelength;                    
                     /////////////////////////////////////////Wave Value Calculations////////////////////////////////
                     var w = 6.28318f / wavelength; // 2pi over wavelength(hardcoded)
                     var wSpeed = math.sqrt(9.8f * w); // frequency of the wave based off wavelength
@@ -157,13 +156,11 @@ namespace WaterSystem {
                     var windDir = new float2(0f, 0f);
 
                     direction = math.radians(direction); // Convert the incoming degrees to radians
-                    var windDirInput = new float2(math.sin(direction), math.cos(direction)) * (1 - WaveData[wave].omniDir);// Calculate wind direction
-                    var windOmniInput = (pos - omniPos) * WaveData[wave].omniDir;
+                    var windDirInput = new float2(math.sin(direction), math.cos(direction));// Calculate wind direction                    
 
-                    windDir += windDirInput;
-                    windDir += windOmniInput;
+                    windDir += windDirInput;                    
                     windDir = math.normalize(windDir);
-                    var dir = math.dot(windDir, pos - (omniPos * WaveData[wave].omniDir));
+                    var dir = math.dot(windDir, pos);
 
                     /////////////////////////////////////////Position output calculations/////////////////////////////
                     var calc = dir * w + -Time * wSpeed; // the wave calculation

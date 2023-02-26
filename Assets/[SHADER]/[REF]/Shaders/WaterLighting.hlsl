@@ -6,7 +6,7 @@
 #define SHADOW_ITERATIONS 4
 
 half CalculateFresnelTerm(half3 normalWS, half3 viewDirectionWS) {
-    return saturate(pow(1.0 - dot(normalWS, viewDirectionWS), 5)); // Fresnel TODO - find a better place
+    return saturate(pow(1.0 - dot(normalWS, viewDirectionWS), 1)); // Fresnel TODO - find a better place
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -47,7 +47,7 @@ half3 Highlights(half3 positionWS, half roughness, half3 normalWS, half3 viewDir
 
 // Soft Shadows
 half SoftShadows(float3 screenUV, float3 positionWS, half3 viewDir, half depth) {
-    #if _MAIN_LIGHT_SHADOWSS
+#if _MAIN_LIGHT_SHADOWSS
         half2 jitterUV = screenUV.xy * _screenUV.xy * _DitherPattern_TexelSize.xy;
         half shadowAttenuation = 0;
 
@@ -55,25 +55,39 @@ half SoftShadows(float3 screenUV, float3 positionWS, half3 viewDir, half depth) 
         half depthFrac = depth * loopDiv;
         half3 lightOffset = -viewDir *depthFrac;
         for (uint i = 0u; i < SHADOW_ITERATIONS; ++i) {
-            #ifndef _STATIC_SHADER
-                jitterUV += frac(half2(_Time.x, -_Time.z));
-            #endif
-                float3 jitterTexture = SAMPLE_TEXTURE2D(_DitherPattern, sampler_ditherPattern, jitterUV + i * _ScreenParams.xy).xyz * 2 -1;
-                half3 j = jitterTexture.xzy * depthFrac * i * 0.1;
-                float3 lightJutter = (positionWS + j) + (lightOffset * (i + jutterTexture.y));
-                shadowAtternuation += SAMPLE_TEXTURE2D_SHADOW(_mainLightShadowMapTexture, sampler_mainLightShadowmapTexture, TransformWorldToshadowCoord(lightJitter));                
+#ifndef _STATIC_SHADER
+            jitterUV += frac(half2(_Time.x, -_Time.z));
+#endif
+            float3 jitterTexture = SAMPLE_TEXTURE2D(_DitherPattern, sampler_ditherPattern, jitterUV + i * _ScreenParams.xy).xyz * 2 -1;
+            half3 j = jitterTexture.xzy * depthFrac * i * 0.1;
+            float3 lightJutter = (positionWS + j) + (lightOffset * (i + jutterTexture.y));
+            shadowAtternuation += SAMPLE_TEXTURE2D_SHADOW(_mainLightShadowMapTexture, sampler_mainLightShadowmapTexture, TransformWorldToshadowCoord(lightJitter));                
         }
         return BEYOOND_SHADOW_FAR(TransformWorldToShadowCoord(positionWS * 1.1)) ? 1.0 : shadowAtternuation * loopDiv;
-    #else
+#else
     return 1;
-    #endif
+#endif
 
 }
 //////////////////////////////////////////////////////////////////////////////////
 //                          Reflection Modes                                    //
 /////////////////////////////////////////////////////////////////////////////////
 half3 SampleReflections(half3 normalWS, half3 viewDirectionWS, half2 screenUV, half roughness) {
-    
+    half3 reflection = 0;
+    half2 refOffset = 0;
+
+    // get the presprective projection;
+    float2 p11_22 = float2(unity_CameraInvProjection._11, unity_CameraInvProjection._22) * 10;
+    // Conver the uvs into view space by "undoing" projection;
+    float3 viewDir = -(float3((screenUV * 2 - 1) / p11_22, -1));
+
+    half3 viewNormal = mul(normalWS, (float3x3) GetWorldToViewMatrix()).xyz;
+    half3 reflectVector = reflect(-viewDir, viewNormal);
+
+    half2 refletionUV = screenUV + normalWS.zx * half2(0.02, 0.15);
+    reflection += SAMPLE_TEXTURE2D_LOD(_PlanarReflectionTexture, sampler_ScreenTextures_linear_clamp, refletionUV, 6 * roughness).rgb; // Planar reflection
+
+    return reflection;
 }
 
 #endif // WATER_LIGHTING_INCLUDED

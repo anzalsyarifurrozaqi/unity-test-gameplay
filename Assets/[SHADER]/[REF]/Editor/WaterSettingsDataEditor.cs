@@ -5,27 +5,14 @@ using UnityEditor;
 using UnityEditorInternal;
 
 namespace WaterSystem.Data {
+    [CustomEditor(typeof(WaterSettingsData))]
     public class WaterSettingsDataEditor : Editor {
         public override void OnInspectorGUI() {
-            var geomType = serializedObject.FindProperty("waterGeomType");
-            EditorGUILayout.PropertyField(geomType);
+            // var geomType = serializedObject.FindProperty("waterGeomType");
+            // EditorGUILayout.PropertyField(geomType);
 
-            var refType = serializedObject.FindProperty("refType");
-            refType.enumValueIndex = GUILayout.Toolbar(refType.enumValueIndex, refType.enumDisplayNames);
-
-            switch (refType.enumValueIndex) {
-                case 0: { // Cubemap
-                    break;
-                }
-                case 1: { // probe
-                    break;
-                }
-                case 2: { // Planar
-                    var planarSettings = serializedObject.FindProperty("planarSettings");
-                    EditorGUILayout.PropertyField(planarSettings, true);
-                    break;
-                }
-            }
+            var planarSettings = serializedObject.FindProperty("planarSettings");
+            EditorGUILayout.PropertyField(planarSettings, true);
 
             serializedObject.ApplyModifiedProperties();
         }

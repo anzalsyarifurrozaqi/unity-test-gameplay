@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07c7e74650c191743a4f0dbd549213e8, type: 3}
   m_Name: WaterSurfaceData
   m_EditorClassIdentifier: 
-  _waterMaxVisibility: 40
+  _waterMaxVisibility: 44
   _absorptionRamp:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
@@ -73,20 +73,20 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   _waves: []
   _customWaves: 0
-  randomSeed: 34056
+  randomSeed: 22770
   _basicWaveSettings:
     numWaves: 6
-    amplitude: 0.8
-    direction: -6
+    amplitude: 0.1
+    direction: 147
     wavelength: 5
   _foamSettings:
-    foamType: 2
+    foamType: 1
     basicFoam:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.25
-        value: 0
+        time: 0.5
+        value: 0.03301887
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -94,8 +94,8 @@ MonoBehaviour:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 0.9791667
-        value: 0.066037774
+        time: 0.95000005
+        value: 0.1320755
         inSlope: 0
         outSlope: 0
         tangentMode: 0

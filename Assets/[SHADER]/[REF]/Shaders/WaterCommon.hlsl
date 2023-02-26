@@ -254,11 +254,13 @@ half4 WaterFragment(WaterVertexOutput IN) : SV_Target {
 
     sss *= Scattering(depth.x * depthMulti);
 
+    // Reflections
+    half3 reflection = SampleReflections(IN.normal, IN.viewDir.xyz, screenUV.xy, 0.0);
     // Refraction
     half3 refraction = Refraction(distortion, depth.x, depthMulti);
 
     // Do Compositing
-    half3 comp = lerp(lerp(refraction, 1, fresnelTerm) + sss + spec, foam, foamMask); // lerp(refraction, color + reflection + foam, 1-saturate(1-depth.x * 25));
+    half3 comp = lerp(lerp(refraction, reflection, fresnelTerm) + sss + spec, foam, foamMask); // lerp(refraction, color + reflection + foam, 1-saturate(1-depth.x * 25));
 
     // Fog
     float fogFactor = IN.fogFactorNoise.x;
@@ -269,9 +271,9 @@ half4 WaterFragment(WaterVertexOutput IN) : SV_Target {
 #elif defined(_DEBUG_SSS)
     return half4(sss, 1);
 #elif defined(_DEBUG_REFRACTION)
-    return half4(1,0,0,1);
+    return half4(refraction,1);
 #elif defined(_DEBUG_REFLECTION)
-    return half4(1,0,0,1);
+    return half4(reflection,1);
 #elif defined(_DEBUG_NORMAL)
     return half4(IN.normal.x * 0.5 + 0.5, 0, IN.normal.z * 0.5 + 0.5, 1);
 #elif defined(_DEBUG_FRESNEL)

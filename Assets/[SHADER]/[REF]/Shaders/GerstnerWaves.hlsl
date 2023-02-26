@@ -6,15 +6,13 @@ uniform uint _WaveCount; // how many waves, set via the water component
 struct Wave {
     half amplitude;
     half direction;
-    half wavelength;
-    half2 origin;
-    half omni;
+    half wavelength;    
 };
 
 #if defined(USE_STRUCTURED_BUFFER)
     StructuredBuffer<Wave> _WaveDataBuffer;
 #else
-    half4 waveData[20]; // 0-9 amplitude, direction, wavelength, omni, 10-19 origin.xy
+    half4 waveData[20]; // 0-9 amplitude, direction, wavelength
 #endif
 
 struct WaveStruct {
@@ -22,7 +20,7 @@ struct WaveStruct {
     float3 normal;
 };
 
-WaveStruct GerstnerWave(half2 pos, float waveCountMulti, half amplitude, half direction, half wavelength, half omni, half2 omniPos) {
+WaveStruct GerstnerWave(half2 pos, float waveCountMulti, half amplitude, half direction, half wavelength) {
     WaveStruct waveOut;
 
     #if defined(_STATIC_SHADER)
@@ -31,19 +29,18 @@ WaveStruct GerstnerWave(half2 pos, float waveCountMulti, half amplitude, half di
         float time = _Time.y;
     #endif
 
-    ///////////////////////////////////////////Wave Value Calculatuins/////////////////////////////////////////
+    ///////////////////////////////////////////Wave Value Calculations/////////////////////////////////////////
     half3 wave = 0; // wave vector
-    half w = 6.28318 / wavelength; // 2pi overr wavelength(hardcoded)
+    half w = 6.28318 / wavelength; // 2pi over wavelength(hardcoded)
     half wSpeed = sqrt(9.8 * w); // frequency of the wave based off wavelength
     half peak = 1.5; // peak value, 1 is the sharpest
     half qi = peak / (amplitude * w * _WaveCount);
 
     direction = radians(direction); // convert the incoming degrees to radians, for directional waves
-    half2 dirWaveInput = half2(sin(direction), cos(direction)) * (1 - omni);
-    half2 omniWaveInput = (pos - omniPos) * omni;
+    half2 dirWaveInput = half2(sin(direction), cos(direction));    
 
-    half2 windDir = normalize(dirWaveInput + omniWaveInput); // calculate wind direction
-    half2 dir = dot(windDir, pos - (omniPos * omni)); // calculate a gradient along the wind direction
+    half2 windDir = normalize(dirWaveInput); // calculate wind direction
+    half2 dir = dot(windDir, pos); // calculate a gradient along the wind direction
 
     //////////////////////////////////////////Position Output Calculations/////////////////////////////////////
     half calc = dir * w + -time * wSpeed; // the wave calculation
@@ -83,9 +80,7 @@ inline void SampleWaves(float3 position, half opacity, out WaveStruct waveOut) {
         Wave w;
         w.amplitude = waveData[i].x;
         w.direction = waveData[i].y;
-        w.wavelength = waveData[i].z;
-        w.omni = waveData[i].w;
-        w.origin = waveData[i + 10].xy;
+        w.wavelength = waveData[i].z;        
 #endif
 
         WaveStruct wave = GerstnerWave(
@@ -93,9 +88,7 @@ inline void SampleWaves(float3 position, half opacity, out WaveStruct waveOut) {
             waveCountMulti,
             w.amplitude,
             w.direction,
-            w.wavelength,
-            w.omni,
-            w.origin
+            w.wavelength            
         ); // calculate the wave
 
         waveOut.position += wave.position; // add the position
