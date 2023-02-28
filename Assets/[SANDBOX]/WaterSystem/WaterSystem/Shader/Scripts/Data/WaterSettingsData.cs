@@ -3,7 +3,7 @@ using UnityEngine.Rendering.Universal;
 
 namespace WaterSystem.Data {
     // <summary>
-    // This scriptable object stores teh graphical/rendering settings for water system
+    // This scriptable object stores the graphical/rendering settings for water system
     // </summary>
     [System.Serializable][CreateAssetMenu(fileName = "WaterSettignsData", menuName = "WaterSystem/Settings", order =0)]
     public class WaterSettingsData : ScriptableObject {
