@@ -52,7 +52,12 @@ LeafVertexOutput LeafVertex (LeafVertexInput v) {
 half4 LeafFragment(LeafVertexOutput IN) : SV_TARGET {
     UNITY_SETUP_INSTANCE_ID(IN);
 
-    return half4(0.2f, 1, 0, 1);
+    return half4(IN.posWS, 1);
 }
 
 #endif
+
+// TODO : 
+// init texture LOD
+// https://www.youtube.com/watch?v=IyKNU0kgGXs
+// https://www.youtube.com/watch?v=k2Z4IaY_Lfs
